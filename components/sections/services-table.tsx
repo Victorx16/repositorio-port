@@ -10,12 +10,15 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SERVICE_PLANS, whatsappLink } from "@/lib/constants";
+import { useWhatsAppWidget } from "@/components/whatsapp-widget/context";
+import { SERVICE_PLANS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const ICONS = [Rocket, Building2, ShoppingCart, Settings];
 
 export function ServicesTable() {
+  const { open } = useWhatsAppWidget();
+
   return (
     <section id="servicos" className="border-b border-border py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -23,7 +26,7 @@ export function ServicesTable() {
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
             Serviços
           </span>
-          <h2 className="text-balance mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="text-balance mt-3 font-heading text-3xl font-semibold leading-[1.2] tracking-[-0.01em] text-foreground sm:text-4xl">
             Uma solução para cada etapa do seu negócio
           </h2>
           <p className="mt-4 text-balance text-muted-foreground">
@@ -85,16 +88,11 @@ export function ServicesTable() {
                   variant={plan.highlight ? "default" : "outline"}
                   size="lg"
                   className="mt-7 h-11 w-full"
-                  nativeButton={false}
-                  render={
-                    <a
-                      href={whatsappLink(
-                        plan.ctaMessage ??
-                          `Olá! Tenho interesse no plano "${plan.name}" da Code VX.`,
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />
+                  onClick={() =>
+                    open(
+                      plan.ctaIntent ??
+                        `solicitar um orçamento para o plano "${plan.name}"`,
+                    )
                   }
                 >
                   <MessageCircle

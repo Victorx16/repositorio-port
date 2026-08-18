@@ -23,7 +23,7 @@ export function PortfolioBento() {
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
             Portfólio
           </span>
-          <h2 className="text-balance mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="text-balance mt-3 font-heading text-3xl font-semibold leading-[1.2] tracking-[-0.01em] text-foreground sm:text-4xl">
             Projetos reais, resultados mensuráveis
           </h2>
           <p className="mt-4 text-balance text-muted-foreground">

@@ -99,7 +99,8 @@ export interface ServicePlan {
   highlight?: boolean;
   badge?: string;
   ctaLabel?: string;
-  ctaMessage?: string;
+  /** Fragment slotted into the WhatsApp widget's message template: "...e gostaria de {ctaIntent}." */
+  ctaIntent?: string;
 }
 
 export const SERVICE_PLANS: ServicePlan[] = [
@@ -148,7 +149,7 @@ export const SERVICE_PLANS: ServicePlan[] = [
       "Sem compromisso",
     ],
     ctaLabel: "Conversar sobre meu projeto",
-    ctaMessage: "Olá! Tenho um projeto que não se encaixa nos pacotes padrão e quero conversar com a Code VX sobre uma solução sob medida.",
+    ctaIntent: "conversar sobre um projeto sob medida",
   },
 ];
 

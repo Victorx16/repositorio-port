@@ -8,7 +8,7 @@ export function FinalCta() {
     <section className="relative overflow-hidden py-28 sm:py-36">
       <RetroGrid />
       <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <h2 className="text-balance font-heading text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+        <h2 className="text-balance font-heading text-3xl font-semibold leading-[1.2] tracking-[-0.01em] text-foreground sm:text-5xl">
           Pronto para aparecer quando seu cliente procurar?
         </h2>
         <p className="mt-5 text-balance text-muted-foreground sm:text-lg">

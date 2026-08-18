@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import { MotionConfig } from "framer-motion";
+import { WhatsAppWidgetProvider } from "@/components/whatsapp-widget/context";
+import { WhatsAppWidget } from "@/components/whatsapp-widget/widget";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  display: "swap",
-});
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -35,10 +24,21 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`dark ${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`dark ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap"
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+        <MotionConfig reducedMotion="user">
+          <WhatsAppWidgetProvider>
+            {children}
+            <WhatsAppWidget />
+          </WhatsAppWidgetProvider>
+        </MotionConfig>
       </body>
     </html>
   );

@@ -44,7 +44,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-balance max-w-3xl font-heading text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+            className="text-balance max-w-3xl font-heading text-4xl font-semibold leading-[1.2] tracking-[-0.01em] text-foreground sm:text-5xl lg:text-6xl"
           >
             Enquanto seu concorrente aparece no Google,{" "}
             <span className="text-primary">
