@@ -1,10 +1,13 @@
-import { BadgeCheck, MapPin } from "lucide-react";
+import { BadgeCheck, Store } from "lucide-react";
 import { Marquee } from "@/components/magicui/marquee";
-import { REGIONAL_FOCUS, TECH_CREDENTIALS } from "@/lib/constants";
+import { BUSINESS_NICHES, TECH_CREDENTIALS } from "@/lib/constants";
 
 export function MarqueeCredentials() {
   return (
-    <section className="relative border-b border-border bg-background-alt py-10">
+    <section
+      aria-hidden="true"
+      className="relative border-b border-border bg-background-alt py-10"
+    >
       <div className="flex flex-col gap-4">
         <Marquee pauseOnHover duration="32s" className="[--gap:2.5rem]">
           {TECH_CREDENTIALS.map((item) => (
@@ -23,12 +26,12 @@ export function MarqueeCredentials() {
           duration="38s"
           className="[--gap:2.5rem]"
         >
-          {REGIONAL_FOCUS.map((item) => (
+          {BUSINESS_NICHES.map((item) => (
             <span
               key={item}
-              className="flex items-center gap-2 whitespace-nowrap font-mono text-sm text-muted-foreground/70"
+              className="flex items-center gap-2 whitespace-nowrap font-mono text-sm text-slate-300/90"
             >
-              <MapPin className="size-3.5 text-secondary" aria-hidden="true" />
+              <Store className="size-3.5 text-secondary" aria-hidden="true" />
               {item}
             </span>
           ))}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Code VX — Engenharia de Software Premium para SP e ABC Paulista",
+  title: "Code VX: Engenharia de Software Premium para SP e ABC Paulista",
   description:
     "Sites de alta conversão, ultra performance (< 1s) e posicionamento no Google para negócios e comércios de São Paulo e ABC Paulista.",
 };
@@ -37,7 +38,7 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        {children}
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
       </body>
     </html>
   );

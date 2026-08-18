@@ -4,7 +4,7 @@ import { Hero } from "@/components/sections/hero";
 import { MarqueeCredentials } from "@/components/sections/marquee-credentials";
 import { SearchSimulator } from "@/components/sections/search-simulator";
 import { PortfolioBento } from "@/components/sections/portfolio-bento";
-import { Objections } from "@/components/sections/objections";
+import { Process } from "@/components/sections/process";
 import { ServicesTable } from "@/components/sections/services-table";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -18,7 +18,7 @@ export default function Home() {
         <MarqueeCredentials />
         <SearchSimulator />
         <PortfolioBento />
-        <Objections />
+        <Process />
         <ServicesTable />
         <Faq />
         <FinalCta />

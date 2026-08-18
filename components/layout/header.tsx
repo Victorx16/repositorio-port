@@ -62,7 +62,10 @@ export function Header() {
             rel="noopener noreferrer"
             className="text-xs"
           >
-            <MessageCircle className="mr-1.5 size-3.5" aria-hidden="true" />
+            <MessageCircle
+              className="mr-1.5 size-3.5 transition-transform duration-300 group-hover:scale-110"
+              aria-hidden="true"
+            />
             Falar no WhatsApp
           </ShimmerButton>
         </div>
@@ -111,7 +114,10 @@ export function Header() {
                 rel="noopener noreferrer"
                 className="w-full"
               >
-                <MessageCircle className="mr-1.5 size-4" aria-hidden="true" />
+                <MessageCircle
+                  className="mr-1.5 size-4 transition-transform duration-300 group-hover:scale-110"
+                  aria-hidden="true"
+                />
                 Falar no WhatsApp
               </ShimmerButton>
             </div>

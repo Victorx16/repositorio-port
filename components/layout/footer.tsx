@@ -74,7 +74,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {SITE.name} — {SITE.legalName}. CNPJ{" "}
+            © {new Date().getFullYear()} {SITE.name}. {SITE.legalName}. CNPJ{" "}
             {SITE.cnpj}. Todos os direitos reservados.
           </p>
           <p>Feito com engenharia de verdade em São Paulo.</p>

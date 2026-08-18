@@ -52,7 +52,7 @@ export const ShimmerButton = React.forwardRef<
         }
         className={cn(
           "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-primary-foreground)] [background:var(--bg)] [border-radius:var(--radius)]",
-          "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-px",
+          "transform-gpu transition-[transform,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:shadow-[0_0_32px_-6px_color-mix(in_srgb,var(--color-primary)_65%,transparent)] active:scale-100 active:translate-y-px",
           className,
         )}
         {...props}

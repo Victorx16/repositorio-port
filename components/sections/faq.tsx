@@ -18,8 +18,8 @@ export function Faq() {
             Perguntas frequentes
           </h2>
           <p className="mt-4 text-balance text-muted-foreground">
-            Segurança jurídica, propriedade do código e como funciona o
-            trabalho — sem letras miúdas.
+            Segurança jurídica, propriedade do código e transparência total
+            em cada projeto.
           </p>
         </div>
 

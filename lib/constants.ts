@@ -30,15 +30,17 @@ export const TECH_CREDENTIALS = [
   "Mobile-First Design",
 ];
 
-export const REGIONAL_FOCUS = [
-  "São Paulo",
-  "Santo André",
-  "São Bernardo do Campo",
-  "São Caetano do Sul",
-  "Diadema",
-  "Mauá",
-  "Ribeirão Pires",
-  "Mogi das Cruzes",
+export const BUSINESS_NICHES = [
+  "Salão de Beleza",
+  "Barbearia",
+  "E-commerce",
+  "Advocacia",
+  "Adega",
+  "Tabacaria",
+  "Restaurantes",
+  "Clínicas",
+  "Mecânicas",
+  "Academias",
 ];
 
 export type PortfolioNiche =
@@ -65,23 +67,27 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   { id: "case-6", niche: "Serviços", size: "md" },
 ];
 
-export interface Objection {
+export interface ProcessStep {
   title: string;
   body: string;
 }
 
-export const OBJECTIONS: Objection[] = [
+export const PROCESS_STEPS: ProcessStep[] = [
   {
-    title: "\"Já tive uma experiência ruim com site antes\"",
-    body: "Entendemos — muito freelancer entrega e some. Por isso trabalhamos com contrato formal, prazos claros e suporte contínuo após a entrega. Você acompanha cada etapa.",
+    title: "Diagnóstico",
+    body: "Entendemos o momento da sua empresa, mapeamos a concorrência na sua região e definimos a estrutura ideal.",
   },
   {
-    title: "\"Tenho medo de tecnologia, não vou entender nada\"",
-    body: "Você não precisa entender de código. Traduzimos tudo em português simples, com reuniões objetivas e um painel claro do que está sendo feito e por quê.",
+    title: "Proposta & Escopo",
+    body: "Apresentamos a solução técnica, prazos cravados e investimento de forma clara e sem letras miúdas.",
   },
   {
-    title: "\"Vou ver isso depois, agora quero saber o preço\"",
-    body: "Sem problema. Nossa proposta é sempre personalizada ao seu negócio — chama no WhatsApp e te passamos um valor justo em poucos minutos, sem enrolação.",
+    title: "Design & Engenharia",
+    body: "Construímos uma interface exclusiva, rápida e totalmente otimizada para celular e Google.",
+  },
+  {
+    title: "Publicação & Suporte",
+    body: "Colocamos seu site no ar no domínio oficial e garantimos suporte contínuo para você focar no seu negócio.",
   },
 ];
 
@@ -92,6 +98,8 @@ export interface ServicePlan {
   features: string[];
   highlight?: boolean;
   badge?: string;
+  ctaLabel?: string;
+  ctaMessage?: string;
 }
 
 export const SERVICE_PLANS: ServicePlan[] = [
@@ -102,9 +110,11 @@ export const SERVICE_PLANS: ServicePlan[] = [
     features: [
       "Design exclusivo de alta conversão",
       "Performance < 1s de carregamento",
-      "Otimização para Google Ads / Meta Ads",
+      "Estrutura otimizada para campanhas de tráfego pago",
       "Integração com WhatsApp e formulários",
     ],
+    highlight: true,
+    badge: "Ideal para começar",
   },
   {
     id: "institucional",
@@ -116,8 +126,6 @@ export const SERVICE_PLANS: ServicePlan[] = [
       "Painel de gestão de conteúdo",
       "Certificado SSL e hospedagem premium",
     ],
-    highlight: true,
-    badge: "Mais Escolhido",
   },
   {
     id: "ecommerce",
@@ -132,14 +140,15 @@ export const SERVICE_PLANS: ServicePlan[] = [
   },
   {
     id: "sistema",
-    name: "Sistema Sob Medida",
-    description: "Desenvolvimento 100% customizado, com APIs e automações para seu processo.",
+    name: "Projeto sob consulta",
+    description: "Precisa de algo fora do padrão? Avaliamos seu caso e propomos uma solução sob medida.",
     features: [
-      "Arquitetura sob medida para seu negócio",
-      "Integrações via API (ERPs, CRMs, pagamentos)",
-      "Automações de processos internos",
-      "Escalável e com suporte dedicado",
+      "Análise gratuita do seu processo",
+      "Proposta personalizada",
+      "Sem compromisso",
     ],
+    ctaLabel: "Conversar sobre meu projeto",
+    ctaMessage: "Olá! Tenho um projeto que não se encaixa nos pacotes padrão e quero conversar com a Code VX sobre uma solução sob medida.",
   },
 ];
 
@@ -171,12 +180,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Vocês cuidam de domínio e hospedagem?",
-    answer: "Sim, cuidamos de toda a parte técnica — registro de domínio, hospedagem em infraestrutura de borda (edge) e certificado SSL — ou orientamos você a manter a titularidade em seu próprio nome, como preferir.",
+    answer: "Sim, cuidamos de toda a parte técnica, incluindo registro de domínio, hospedagem em infraestrutura de borda (edge) e certificado SSL, ou orientamos você a manter a titularidade em seu próprio nome, como preferir.",
   },
 ];
 
 export const HERO_METRICS = [
-  { label: "LCP", value: 0.4, suffix: "s", description: "Carregamento principal" },
-  { label: "Uptime", value: 99.9, suffix: "%", description: "Disponibilidade" },
-  { label: "CLS", value: 0.01, suffix: "", description: "Estabilidade visual" },
+  { label: "Carregamento", technical: "LCP", value: 0.4, suffix: "s" },
+  { label: "Sempre no ar", technical: "Uptime", value: 99.9, suffix: "%" },
+  { label: "Sem travamentos", technical: "CLS", value: 0.01, suffix: "" },
 ];

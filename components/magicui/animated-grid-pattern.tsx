@@ -68,17 +68,6 @@ export function AnimatedGridPattern({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numSquares]);
 
-  function updateSquarePosition(id: number) {
-    const { width: w, height: h } = dimensionsRef.current;
-    const cols = Math.max(1, Math.floor(w / width));
-    const rows = Math.max(1, Math.floor(h / height));
-    setSquares((prev) =>
-      prev.map((sq) =>
-        sq.id === id ? { ...sq, pos: getPos(cols, rows) } : sq,
-      ),
-    );
-  }
-
   return (
     <svg
       ref={containerRef}
@@ -116,7 +105,6 @@ export function AnimatedGridPattern({
               repeatType: "reverse",
               delay: index * 0.1,
             }}
-            onAnimationComplete={() => updateSquarePosition(sqId)}
             key={`${px}-${py}-${sqId}`}
             width={width - 1}
             height={height - 1}

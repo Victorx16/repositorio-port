@@ -61,8 +61,8 @@ export function PortfolioBento() {
                       >
                         {item.niche}
                       </Badge>
-                      <span className="font-mono text-[11px] text-muted-foreground/60">
-                        LCP —s
+                      <span className="font-mono text-[11px] text-muted-foreground">
+                        LCP a confirmar
                       </span>
                     </div>
 
@@ -97,7 +97,7 @@ export function PortfolioBento() {
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
                     <DialogTitle>
-                      Case — {item.niche}
+                      Case: {item.niche}
                     </DialogTitle>
                     <DialogDescription>
                       {/* TODO: substituir por screenshot, nome do cliente e métricas reais deste case */}

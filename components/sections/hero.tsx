@@ -30,14 +30,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-foreground"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-foreground shadow-[0_0_16px_-3px_color-mix(in_srgb,var(--color-primary)_45%,transparent)]"
           >
             <span className="relative flex size-1.5">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
             </span>
             <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-            Vagas limitadas para projetos em Agosto
+            Especialistas em SEO Local — SP e ABC Paulista
           </motion.div>
 
           <motion.h1
@@ -46,9 +46,9 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="text-balance max-w-3xl font-heading text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
           >
-            Seu concorrente aparece no Google.{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Seu negócio, não.
+            Enquanto seu concorrente aparece no Google,{" "}
+            <span className="text-primary">
+              seu negócio pode estar invisível.
             </span>
           </motion.h1>
 
@@ -58,10 +58,9 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-6 max-w-xl text-balance text-base text-muted-foreground sm:text-lg"
           >
-            Construímos sites de alta conversão e ultra performance
-            (carregamento abaixo de 1 segundo) para negócios de São Paulo e
-            ABC Paulista serem encontrados — e escolhidos — antes da
-            concorrência.
+            Construímos sites de alta performance (carregamento abaixo de 1
+            segundo) para negócios de São Paulo e ABC Paulista serem
+            encontrados e escolhidos antes da concorrência.
           </motion.p>
 
           <motion.div
@@ -72,14 +71,17 @@ export function Hero() {
           >
             <ShimmerButton
               href={whatsappLink(
-                "Olá! Quero saber mais sobre um site para o meu negócio.",
+                "Olá, quero solicitar um orçamento para o meu negócio",
               )}
               target="_blank"
               rel="noopener noreferrer"
               className="h-11 px-7 text-sm"
             >
-              <MessageCircle className="mr-2 size-4" aria-hidden="true" />
-              Falar com um especialista
+              <MessageCircle
+                className="mr-2 size-4 transition-transform duration-300 group-hover:scale-110"
+                aria-hidden="true"
+              />
+              Quero aparecer no Google
             </ShimmerButton>
             <Button
               variant="outline"
@@ -89,7 +91,7 @@ export function Hero() {
               render={<a href="#portfolio" />}
             >
               Ver portfólio
-              <ArrowRight className="ml-1.5 size-4" aria-hidden="true" />
+              <ArrowRight className="ml-1.5 size-4 transition-transform duration-200 group-hover/button:translate-x-0.5" aria-hidden="true" />
             </Button>
           </motion.div>
         </div>
@@ -139,7 +141,7 @@ export function Hero() {
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {metric.description}
+                    ({metric.technical})
                   </p>
                 </div>
               ))}

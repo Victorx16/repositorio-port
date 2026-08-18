@@ -48,7 +48,7 @@ export function SearchSimulator() {
                     concorrente-visivel.com.br
                   </p>
                   <p className="font-heading text-base font-semibold text-foreground">
-                    Auto Mecânica Concorrente — Agendamento Online
+                    Auto Mecânica Concorrente com Agendamento Online
                   </p>
                   <div className="mt-1 flex items-center gap-1 text-xs text-secondary">
                     <Star className="size-3.5 fill-secondary" />
@@ -64,7 +64,7 @@ export function SearchSimulator() {
                 <TrendingUp className="size-4 shrink-0 text-secondary" />
               </div>
 
-              <div className="flex items-start gap-4 rounded-xl border border-destructive/20 bg-destructive/[0.04] p-4 opacity-60 grayscale">
+              <div className="flex items-start gap-4 rounded-xl border border-destructive/20 bg-destructive/[0.04] p-4 grayscale">
                 <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-destructive/10 font-mono text-xs font-bold text-destructive">
                   17
                 </span>
@@ -73,7 +73,7 @@ export function SearchSimulator() {
                     seu-negocio.com.br
                   </p>
                   <p className="font-heading text-base font-semibold text-foreground">
-                    Sua Empresa — página não otimizada
+                    Sua Empresa sem otimização para o Google
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Página 2 dos resultados · praticamente invisível
@@ -82,7 +82,7 @@ export function SearchSimulator() {
                 <TrendingDown className="size-4 shrink-0 text-destructive" />
               </div>
 
-              <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              <div className="flex items-center gap-2 rounded-lg bg-destructive/[0.06] px-4 py-3 text-sm text-destructive">
                 <AlertTriangle className="size-4 shrink-0" />
                 Mais de 90% dos cliques ficam na primeira página. Você está
                 perdendo clientes todos os dias.
@@ -99,7 +99,7 @@ export function SearchSimulator() {
                     seu-negocio.com.br
                   </p>
                   <p className="font-heading text-base font-semibold text-foreground">
-                    Sua Empresa — construído pela Code VX
+                    Sua Empresa construída pela Code VX
                   </p>
                   <div className="mt-1 flex items-center gap-1 text-xs text-primary">
                     <Star className="size-3.5 fill-primary" />
@@ -131,8 +131,8 @@ export function SearchSimulator() {
 
               <div className="flex items-center gap-2 rounded-lg bg-secondary/10 px-4 py-3 text-sm text-secondary">
                 <TrendingUp className="size-4 shrink-0" />
-                Agora é o seu negócio que aparece primeiro — e recebe a
-                ligação do cliente.
+                Agora o seu negócio aparece primeiro e recebe os contatos
+                diretos no WhatsApp.
               </div>
             </TabsContent>
           </Tabs>

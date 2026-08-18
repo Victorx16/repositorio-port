@@ -12,19 +12,22 @@ export function FinalCta() {
           Pronto para aparecer quando seu cliente procurar?
         </h2>
         <p className="mt-5 text-balance text-muted-foreground sm:text-lg">
-          Fale agora com a Code VX e receba uma proposta personalizada para o
-          seu negócio — sem compromisso.
+          Fale agora com a Code VX e receba uma análise inicial para o seu
+          negócio sem compromisso.
         </p>
         <div className="mt-9 flex justify-center">
           <ShimmerButton
             href={whatsappLink(
-              "Olá! Vim pelo site e quero uma proposta para o meu negócio.",
+              "Olá! Vim pelo site e quero solicitar um orçamento para o meu negócio.",
             )}
             target="_blank"
             rel="noopener noreferrer"
             className="h-12 px-8 text-sm"
           >
-            <MessageCircle className="mr-2 size-4" aria-hidden="true" />
+            <MessageCircle
+              className="mr-2 size-4 transition-transform duration-300 group-hover:scale-110"
+              aria-hidden="true"
+            />
             Falar no WhatsApp agora
           </ShimmerButton>
         </div>

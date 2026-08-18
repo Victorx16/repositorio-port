@@ -189,6 +189,7 @@
   }
   html {
     @apply font-sans;
+    scroll-padding-top: 5rem;
   }
   h1,
   h2,
