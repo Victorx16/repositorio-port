@@ -56,7 +56,7 @@
 
   --animate-marquee: marquee var(--duration, 40s) linear infinite;
   --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite;
-  --animate-border-beam: border-beam calc(var(--duration, 8) * 1s) infinite linear;
+  --animate-border-beam: border-beam-dash var(--duration, 8s) infinite linear;
   --animate-shimmer-slide: shimmer-slide var(--duration, 2.5s) ease-in-out infinite alternate;
   --animate-spin-around: spin-around calc(var(--duration, 2.5s) * 2) infinite linear;
   --animate-retro-grid: retro-grid 40s linear infinite;
@@ -78,9 +78,9 @@
       transform: translateY(calc(-100% - var(--gap, 1rem)));
     }
   }
-  @keyframes border-beam {
-    100% {
-      offset-distance: 100%;
+  @keyframes border-beam-dash {
+    to {
+      stroke-dashoffset: -100;
     }
   }
   @keyframes shimmer-slide {
