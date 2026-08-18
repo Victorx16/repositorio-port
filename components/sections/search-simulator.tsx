@@ -1,6 +1,14 @@
 "use client";
 
-import { AlertTriangle, Search, Star, TrendingDown, TrendingUp } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  Search,
+  Star,
+  TrendingDown,
+  TrendingUp,
+  X,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function SearchSimulator() {
@@ -29,12 +37,24 @@ export function SearchSimulator() {
           </div>
 
           <Tabs defaultValue="sem">
-            <TabsList variant="line" className="mb-6 w-full">
-              <TabsTrigger value="sem" className="flex-1">
+            <TabsList className="mb-6 h-[53px]! w-full rounded-full bg-surface-elevated p-1">
+              <TabsTrigger
+                value="sem"
+                className="flex-1 gap-1.5 rounded-full text-muted-foreground data-active:bg-primary data-active:text-primary-foreground data-active:shadow-none dark:data-active:border-transparent dark:data-active:bg-primary dark:data-active:text-primary-foreground"
+              >
+                <X className="size-3.5" aria-hidden="true" />
                 Sem Code VX
               </TabsTrigger>
-              <TabsTrigger value="com" className="flex-1">
+              <TabsTrigger
+                value="com"
+                className="flex-1 gap-1.5 rounded-full text-muted-foreground data-active:bg-primary data-active:text-primary-foreground data-active:shadow-none dark:data-active:border-transparent dark:data-active:bg-primary dark:data-active:text-primary-foreground"
+              >
+                <Check className="size-3.5" aria-hidden="true" />
                 Com Code VX
+                <span className="relative flex size-2" aria-hidden="true">
+                  <span className="absolute inline-flex size-full animate-subtle-pulse rounded-full bg-secondary" />
+                  <span className="relative inline-flex size-2 rounded-full bg-secondary" />
+                </span>
               </TabsTrigger>
             </TabsList>
 
@@ -65,7 +85,7 @@ export function SearchSimulator() {
               </div>
 
               <div className="flex items-start gap-4 rounded-xl border border-destructive/20 bg-destructive/[0.04] p-4 grayscale">
-                <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-destructive/10 font-mono text-xs font-bold text-destructive">
+                <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-destructive/[0.04] font-mono text-xs font-bold text-destructive">
                   17
                 </span>
                 <div className="min-w-0 flex-1">

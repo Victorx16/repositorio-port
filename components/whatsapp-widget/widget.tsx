@@ -47,6 +47,7 @@ export function WhatsAppWidget() {
   const [name, setName] = useState("");
   const [countryCode, setCountryCode] = useState("+55");
   const [phone, setPhone] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,6 +67,10 @@ export function WhatsAppWidget() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Honeypot: real users never see or fill this field. If it's filled,
+    // silently drop the submission instead of flagging it to the bot.
+    if (honeypot) return;
 
     const trimmedName = name.trim();
     const phoneDigits = phone.replace(/\D/g, "");
@@ -135,6 +140,18 @@ export function WhatsAppWidget() {
             </div>
 
             <form onSubmit={handleSubmit} noValidate className="space-y-4 px-5 py-5">
+              {/* Honeypot: hidden from real users, catches basic bots. */}
+              <input
+                type="text"
+                name="company"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
+
               <div>
                 <label
                   htmlFor="wa-widget-name"

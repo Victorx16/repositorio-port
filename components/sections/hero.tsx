@@ -7,6 +7,7 @@ import { BorderBeam } from "@/components/magicui/border-beam";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { Button } from "@/components/ui/button";
+import { CtaArrowBadge } from "@/components/ui/cta-arrow-badge";
 import { HERO_METRICS, whatsappLink } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -75,7 +76,7 @@ export function Hero() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-11 px-7 text-sm"
+              className="h-11 animate-pulse-glow px-7 text-sm"
             >
               <MessageCircle
                 className="mr-2 size-4 transition-transform duration-300 group-hover:scale-110"
@@ -86,12 +87,13 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              className="h-11"
+              className="relative h-11 pr-7"
               nativeButton={false}
               render={<a href="#portfolio" />}
             >
               Ver portfólio
               <ArrowRight className="ml-1.5 size-4 transition-transform duration-200 group-hover/button:translate-x-0.5" aria-hidden="true" />
+              <CtaArrowBadge />
             </Button>
           </motion.div>
         </div>

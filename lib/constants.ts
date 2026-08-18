@@ -169,7 +169,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Como funciona o modelo de pagamento 50/50?",
-    answer: "50% do valor é pago na aprovação do escopo/orçamento para iniciarmos o desenvolvimento, e os outros 50% na entrega final, após sua aprovação do site funcionando.",
+    answer: "50% do valor é pago na aprovação do escopo/orçamento para iniciarmos o desenvolvimento, e os outros 50% na entrega final, após a aprovação do site em funcionamento.",
   },
   {
     question: "O que acontece depois que o site é entregue?",

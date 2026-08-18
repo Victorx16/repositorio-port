@@ -1,15 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Building2,
-  Check,
-  MessageCircle,
-  Rocket,
-  Settings,
-  ShoppingCart,
-} from "lucide-react";
+import { Building2, Check, Rocket, Settings, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CtaArrowBadge } from "@/components/ui/cta-arrow-badge";
 import { useWhatsAppWidget } from "@/components/whatsapp-widget/context";
 import { SERVICE_PLANS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -87,7 +81,7 @@ export function ServicesTable() {
                 <Button
                   variant={plan.highlight ? "default" : "outline"}
                   size="lg"
-                  className="mt-7 h-11 w-full"
+                  className="relative mt-7 h-11 w-full pr-7"
                   onClick={() =>
                     open(
                       plan.ctaIntent ??
@@ -95,11 +89,8 @@ export function ServicesTable() {
                     )
                   }
                 >
-                  <MessageCircle
-                    className="mr-1.5 size-4 transition-transform duration-300 group-hover/button:scale-110"
-                    aria-hidden="true"
-                  />
                   {plan.ctaLabel ?? "Solicitar orçamento"}
+                  <CtaArrowBadge />
                 </Button>
               </motion.div>
             );
