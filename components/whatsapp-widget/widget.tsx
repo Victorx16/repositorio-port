@@ -113,19 +113,22 @@ export function WhatsAppWidget() {
           >
             <div className="flex items-start justify-between gap-3 border-b border-border bg-background-alt px-5 py-4">
               <div className="flex items-center gap-3">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary/15 font-heading text-sm font-semibold text-secondary">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary/15 font-display text-sm font-semibold text-secondary">
                   {AGENT_INITIALS}
                 </div>
                 <div>
-                  <p className="font-heading text-sm font-semibold text-foreground">
-                    {AGENT_NAME} <span className="font-sans font-normal text-muted-foreground">· {AGENT_ROLE}</span>
-                  </p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-xs text-secondary">
-                    <span className="relative flex size-1.5">
-                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-secondary opacity-75" />
-                      <span className="relative inline-flex size-1.5 rounded-full bg-secondary" />
+                  <p className="font-display text-sm font-semibold text-foreground">
+                    {AGENT_NAME}{" "}
+                    <span className="font-sans font-normal text-muted-foreground">
+                      · {AGENT_ROLE}
                     </span>
-                    online · responde em minutos
+                  </p>
+                  <p className="text-mute mt-1 flex items-center gap-2 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
+                    <span
+                      aria-hidden="true"
+                      className="bg-signal size-1.5 shrink-0"
+                    />
+                    Responde no mesmo dia útil
                   </p>
                 </div>
               </div>
@@ -139,7 +142,11 @@ export function WhatsAppWidget() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} noValidate className="space-y-4 px-5 py-5">
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="space-y-4 px-5 py-5"
+            >
               {/* Honeypot: hidden from real users, catches basic bots. */}
               <input
                 type="text"
@@ -166,18 +173,24 @@ export function WhatsAppWidget() {
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
-                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
+                    if (errors.name)
+                      setErrors((p) => ({ ...p, name: undefined }));
                   }}
                   placeholder="Como podemos te chamar?"
                   aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? "wa-widget-name-error" : undefined}
+                  aria-describedby={
+                    errors.name ? "wa-widget-name-error" : undefined
+                  }
                   className={cn(
-                    "w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary/50",
+                    "w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
                     errors.name ? "border-destructive/50" : "border-border",
                   )}
                 />
                 {errors.name && (
-                  <p id="wa-widget-name-error" className="mt-1.5 text-xs text-destructive">
+                  <p
+                    id="wa-widget-name-error"
+                    className="mt-1.5 text-xs text-destructive"
+                  >
                     {errors.name}
                   </p>
                 )}
@@ -210,19 +223,25 @@ export function WhatsAppWidget() {
                     value={phone}
                     onChange={(e) => {
                       setPhone(formatPhone(e.target.value));
-                      if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
+                      if (errors.phone)
+                        setErrors((p) => ({ ...p, phone: undefined }));
                     }}
                     placeholder="(11) 99999-9999"
                     aria-invalid={Boolean(errors.phone)}
-                    aria-describedby={errors.phone ? "wa-widget-phone-error" : undefined}
+                    aria-describedby={
+                      errors.phone ? "wa-widget-phone-error" : undefined
+                    }
                     className={cn(
-                      "w-full min-w-0 rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary/50",
+                      "w-full min-w-0 rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
                       errors.phone ? "border-destructive/50" : "border-border",
                     )}
                   />
                 </div>
                 {errors.phone && (
-                  <p id="wa-widget-phone-error" className="mt-1.5 text-xs text-destructive">
+                  <p
+                    id="wa-widget-phone-error"
+                    className="mt-1.5 text-xs text-destructive"
+                  >
                     {errors.phone}
                   </p>
                 )}
@@ -230,7 +249,7 @@ export function WhatsAppWidget() {
 
               <button
                 type="submit"
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-secondary text-sm font-semibold text-secondary-foreground transition-transform duration-200 hover:scale-[1.02] active:scale-100"
+                className="bg-signal text-ink hover:bg-[#ff7440] flex h-12 w-full items-center justify-center gap-2.5 rounded-xs font-mono text-[0.7rem] font-medium tracking-[0.14em] uppercase transition-colors duration-200"
               >
                 <Send className="size-4" aria-hidden="true" />
                 Iniciar conversa
@@ -250,10 +269,9 @@ export function WhatsAppWidget() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="relative flex size-14 items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-[0_8px_24px_-4px_rgba(16,185,129,0.55)] transition-transform duration-200 hover:scale-105 active:scale-100"
+            className="bg-signal text-ink relative flex size-14 items-center justify-center rounded-full shadow-[0_8px_28px_-6px_rgba(255,90,31,0.5)] transition-transform duration-200 hover:scale-105 active:scale-100"
           >
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-secondary opacity-40" />
-            <MessageCircle className="relative size-6" aria-hidden="true" />
+            <MessageCircle className="size-6" aria-hidden="true" />
           </motion.button>
         )}
       </AnimatePresence>

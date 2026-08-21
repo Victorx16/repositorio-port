@@ -1,21 +1,46 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { MotionConfig } from "framer-motion";
+import { RevealObserver } from "@/components/ui/reveal-observer";
 import { WhatsAppWidgetProvider } from "@/components/whatsapp-widget/context";
 import { WhatsAppWidget } from "@/components/whatsapp-widget/widget";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+/**
+ * As três fontes são servidas pelo próprio domínio via next/font.
+ *
+ * A versão anterior puxava Clash Display e Satoshi de um <link rel=stylesheet>
+ * para a Fontshare — uma requisição a um terceiro que bloqueia a renderização
+ * e só então revela quantos arquivos de fonte ainda faltam baixar. Num site
+ * que vende carregamento abaixo de um segundo, isso era o defeito mais caro
+ * da página. Self-hosted, o CSS entra embutido no HTML e o navegador já sai
+ * buscando as fontes no primeiro instante, no mesmo domínio e na mesma conexão.
+ */
+
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin", "latin-ext"],
+  axes: ["wdth"],
   display: "swap",
 });
 
-const title = "Code VX: Engenharia de Software Premium para SP e ABC Paulista";
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const title = "Code VX: estúdio de engenharia web em São Paulo e ABC Paulista";
 const description =
-  "Sites de alta conversão, ultra performance (< 1s) e posicionamento no Google para negócios e comércios de São Paulo e ABC Paulista.";
+  "Sites feitos sob medida para negócios de São Paulo e ABC Paulista: abrem antes de o cliente desistir, aparecem na busca e trazem a conversa pronta para o WhatsApp.";
 
 export const metadata: Metadata = {
   // TODO: trocar pelo domínio definitivo assim que registrado/apontado.
@@ -42,24 +67,20 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`dark ${jetbrainsMono.variable} h-full antialiased`}
+      className={`dark ${archivo.variable} ${instrumentSans.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <head>
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link
-          rel="preconnect"
-          href="https://cdn.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap"
-        />
-      </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="bg-background text-foreground flex min-h-full flex-col">
         <MotionConfig reducedMotion="user">
           <WhatsAppWidgetProvider>
+            {/* Atalho de teclado: primeira parada do Tab, invisível até receber foco. */}
+            <a
+              href="#conteudo"
+              className="bg-signal text-ink sr-only rounded-xs px-4 py-2 text-sm font-semibold focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-3 focus-visible:z-100"
+            >
+              Pular para o conteúdo
+            </a>
             {children}
+            <RevealObserver />
             <WhatsAppWidget />
           </WhatsAppWidgetProvider>
         </MotionConfig>

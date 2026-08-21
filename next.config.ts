@@ -6,8 +6,8 @@ import type { NextConfig } from "next";
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== "production" ? " 'unsafe-eval'" : ""}`,
-  "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
-  "font-src 'self' https://cdn.fontshare.com data:",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
   "img-src 'self' data: blob:",
   "connect-src 'self'",
   "frame-ancestors 'none'",

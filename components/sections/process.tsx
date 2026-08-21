@@ -1,67 +1,93 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/ui/reveal";
+import { SpecLabel } from "@/components/ui/spec-label";
 import { PROCESS_STEPS } from "@/lib/constants";
 
+/**
+ * O processo.
+ *
+ * A numeração fica porque aqui a ordem é informação de verdade: são quatro
+ * etapas que acontecem nessa sequência, e saber que a proposta vem antes do
+ * código é o que tira o medo de contratar. Numerar uma lista que não é
+ * sequência seria enfeite; numerar esta é rotular.
+ *
+ * O que cada etapa ganhou: um prazo e uma linha dizendo o que cabe ao cliente.
+ * "Design & Engenharia" sem prazo e sem tarefa é uma caixa bonita que não
+ * responde as duas únicas perguntas de quem vai assinar — quanto tempo leva e
+ * o que vão me pedir.
+ *
+ * A linha de cota que costurava as etapas era um gradiente com brilho. Aqui
+ * ela é o próprio fio de 1px que fecha o topo das quatro colunas, com uma
+ * marca laranja em cada estação. Mesma função, sem o néon — e, de quebra,
+ * vira empilhamento vertical no celular sem nenhum código a mais.
+ */
 export function Process() {
   return (
-    <section id="processo" className="border-b border-border bg-background-alt py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-            Processo Transparente
-          </span>
-          <h2 className="text-balance mt-3 font-heading text-3xl font-semibold leading-[1.2] tracking-[-0.01em] text-foreground sm:text-4xl">
-            Do diagnóstico ao resultado, sem mistério
-          </h2>
-          <p className="mt-4 text-balance text-muted-foreground">
-            Quatro etapas claras para você acompanhar cada fase do seu
-            projeto com segurança total.
-          </p>
-        </div>
-
-        <div className="relative mt-20 flex flex-col gap-10 sm:mt-24 sm:grid sm:grid-cols-4 sm:gap-4">
-          {/* Connecting line — desktop only (horizontal, spans badge centers) */}
-          <motion.div
-            aria-hidden="true"
-            initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute left-[12.5%] right-[12.5%] top-6 hidden h-px origin-left bg-gradient-to-r from-primary/50 via-primary/80 to-primary/50 shadow-[0_0_12px_color-mix(in_srgb,var(--color-primary)_55%,transparent)] sm:block"
-          />
-
-          {PROCESS_STEPS.map((step, i) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.4, delay: i * 0.12 }}
-              className="relative flex flex-row items-start gap-4 sm:flex-col sm:items-center sm:gap-4 sm:text-center"
+    <section id="processo" className="border-rule border-b">
+      <div className="shell band">
+        <Reveal>
+          <SpecLabel index="04">O processo</SpecLabel>
+          <div className="mt-7 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <h2
+              data-reveal-line=""
+              className="text-headline max-w-[16ch] overflow-hidden pb-[0.08em]"
             >
-              {/* Connecting segment — mobile only (vertical, badge center to next badge center) */}
-              {i < PROCESS_STEPS.length - 1 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute left-6 top-6 -bottom-10 w-px bg-gradient-to-b from-primary/60 to-primary/20 shadow-[0_0_8px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] sm:hidden"
-                />
-              )}
+              <span className="block text-balance">
+                Quatro etapas, com prazo em cada uma.
+              </span>
+            </h2>
+            <p className="text-mute max-w-md leading-relaxed text-pretty">
+              Você sabe onde o projeto está e o que precisa entregar em cada
+              fase. A etapa que mais atrasa projeto é a terceira, e ela depende
+              de você. Está escrito lá.
+            </p>
+          </div>
+        </Reveal>
 
-              <div className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-surface font-mono text-sm font-bold text-primary shadow-[0_0_20px_color-mix(in_srgb,var(--color-primary)_35%,transparent)]">
-                {String(i + 1).padStart(2, "0")}
+        <ol className="mt-16 grid lg:grid-cols-4">
+          {PROCESS_STEPS.map((step, i) => (
+            <Reveal
+              as="li"
+              key={step.title}
+              index={i}
+              // `flex-col` aqui e `flex-1` no parágrafo: os textos das quatro
+              // etapas têm alturas diferentes, e sem isso a régua "Cabe a você"
+              // saía escalonada entre as colunas. Numa página construída sobre
+              // alinhamento, um desencontro de 25px estraga a ideia inteira.
+              className="border-rule flex flex-col border-t pt-6 pb-10 lg:pr-8 lg:pb-0"
+            >
+              {/* A estação na linha de cota. */}
+              <div className="flex items-center gap-3">
+                <span aria-hidden="true" className="bg-signal size-1.5" />
+                <span className="text-faint tnum font-mono text-[0.625rem] tracking-[0.2em] uppercase">
+                  Etapa {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <div className="pt-1.5 sm:pt-0">
-                <h3 className="font-heading text-base font-semibold text-foreground">
-                  {step.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground sm:mx-auto sm:max-w-[22ch]">
-                  {step.body}
+
+              <p className="text-signal mt-5 font-mono text-sm">
+                {step.duration}
+              </p>
+
+              <h3 className="font-display text-title text-paper mt-2">
+                {step.title}
+              </h3>
+
+              {/* `flex-1` só no desktop: o parágrafo absorve a folga da coluna
+                  mais alta e empurra o rodapé para a mesma linha em todas. */}
+              <p className="text-mute mt-4 leading-relaxed text-pretty lg:flex-1">
+                {step.body}
+              </p>
+
+              <div className="border-rule mt-6 border-t pt-4">
+                <p className="text-faint font-mono text-[0.5625rem] tracking-[0.2em] uppercase">
+                  Cabe a você
+                </p>
+                <p className="text-mute mt-2 text-sm leading-relaxed text-pretty">
+                  {step.yours}
                 </p>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

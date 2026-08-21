@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, MessageCircle } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, SITE, whatsappLink } from "@/lib/constants";
-import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { Action } from "@/components/ui/action";
 import {
   Sheet,
   SheetContent,
@@ -15,59 +16,74 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
+/**
+ * Cabeçalho.
+ *
+ * A marca é só o nome. A região vinha logo abaixo, em mono, mas aparecia mais
+ * três vezes na primeira tela: no rótulo da capa, no parágrafo da capa e no
+ * carimbo do rodapé. Num cabeçalho fixo, que acompanha a rolagem inteira, a
+ * repetição é a mais cara de todas.
+ *
+ * A navegação é numerada porque a página é uma sequência de leitura, e o número
+ * diz ao visitante onde ele está na folha. Não é ornamento: some no celular,
+ * onde a lista já é vertical e a posição é óbvia.
+ */
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const [rolou, setRolou] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const aoRolar = () => setRolou(window.scrollY > 8);
+    aoRolar();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-colors duration-300",
-        scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-lg"
-          : "border-b border-transparent bg-transparent",
+        rolou
+          ? "border-rule bg-ink/85 border-b backdrop-blur-md"
+          : "border-b border-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="flex items-center gap-2">
-          <span className="font-heading text-lg font-bold tracking-tight text-foreground">
-            Code<span className="text-primary">VX</span>
-          </span>
-        </a>
+      <div className="shell flex h-18 items-center justify-between gap-6">
+        <Link
+          href="/#top"
+          className="font-display text-paper -my-1 flex min-h-11 items-center text-lg font-semibold tracking-tight"
+        >
+          Code<span className="text-signal">VX</span>
+        </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <a
+        <nav className="hidden items-center gap-9 md:flex">
+          {NAV_LINKS.map((link, i) => (
+            <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="link-group text-mute hover:text-paper flex items-baseline gap-2 font-mono text-[0.6875rem] tracking-[0.12em] uppercase transition-colors"
             >
-              {link.label}
-            </a>
+              <span
+                aria-hidden="true"
+                className="text-faint tnum text-[0.5625rem] transition-colors"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="link-rule">{link.label}</span>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden md:block">
-          <ShimmerButton
+          <Action
             href={whatsappLink(
-              "Olá! Vim pelo site e quero saber mais sobre a Code VX.",
+              `Olá! Vim pelo site e quero saber mais sobre a ${SITE.name}.`,
             )}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs"
+            className="min-h-10 px-5"
           >
-            <MessageCircle
-              className="mr-1.5 size-3.5 transition-transform duration-300 group-hover:scale-110"
-              aria-hidden="true"
-            />
-            Falar no WhatsApp
-          </ShimmerButton>
+            WhatsApp
+          </Action>
         </div>
 
         <Sheet>
@@ -76,50 +92,71 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden"
+                className="text-paper hover:bg-ink-3 size-11 md:hidden"
                 aria-label="Abrir menu"
               />
             }
           >
             <Menu className="size-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="bg-background">
-            <SheetHeader>
-              <SheetTitle className="font-heading">
-                Code<span className="text-primary">VX</span>
+
+          <SheetContent
+            side="right"
+            className="bg-ink border-rule w-full max-w-sm border-l"
+          >
+            <SheetHeader className="border-rule flex-row items-center justify-between border-b">
+              <SheetTitle className="font-display text-paper text-base">
+                Code<span className="text-signal">VX</span>
               </SheetTitle>
+              <SheetClose
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-mute hover:text-paper size-11"
+                    aria-label="Fechar menu"
+                  />
+                }
+              >
+                <X className="size-5" />
+              </SheetClose>
             </SheetHeader>
-            <nav className="flex flex-col gap-1 px-4">
-              {NAV_LINKS.map((link) => (
+
+            <nav className="flex flex-col">
+              {NAV_LINKS.map((link, i) => (
                 <SheetClose
                   key={link.href}
                   nativeButton={false}
                   render={
-                    <a
+                    <Link
                       href={link.href}
-                      className="rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+                      className="border-rule text-paper hover:bg-ink-2 flex items-baseline gap-4 border-b px-5 py-5 text-lg transition-colors"
                     />
                   }
                 >
+                  <span
+                    aria-hidden="true"
+                    className="text-faint tnum font-mono text-[0.625rem] tracking-[0.2em]"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   {link.label}
                 </SheetClose>
               ))}
             </nav>
-            <div className="mt-2 px-4">
-              <ShimmerButton
+
+            <div className="p-5">
+              <Action
                 href={whatsappLink(
                   `Olá! Vim pelo site e quero saber mais sobre a ${SITE.name}.`,
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full"
+                arrow
               >
-                <MessageCircle
-                  className="mr-1.5 size-4 transition-transform duration-300 group-hover:scale-110"
-                  aria-hidden="true"
-                />
                 Falar no WhatsApp
-              </ShimmerButton>
+              </Action>
             </div>
           </SheetContent>
         </Sheet>

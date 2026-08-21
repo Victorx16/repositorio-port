@@ -1,10 +1,12 @@
 export const SITE = {
   name: "Code VX",
-  tagline: "Engenharia de Software Premium",
+  tagline: "Estúdio de engenharia web",
   whatsappNumber: "5511966415434",
   legalName: "Victor Xavier Cordeiro Machado",
   cnpj: "64.556.190/0001-00",
   region: "São Paulo & ABC Paulista",
+  /** Ano de abertura. Aparece no carimbo do rodapé — não escondemos ser novo. */
+  since: "2026",
 };
 
 export function whatsappLink(message: string) {
@@ -12,35 +14,72 @@ export function whatsappLink(message: string) {
   return `https://wa.me/${SITE.whatsappNumber}?text=${encoded}`;
 }
 
+/**
+ * Âncoras com a barra na frente de propósito.
+ *
+ * Só com "#trabalho", os links do cabeçalho não faziam nada dentro de
+ * /cases/<slug>: a âncora não existe naquela página, e o clique morria. Com
+ * "/#trabalho" o navegador volta para a home e rola até a seção — e, quando já
+ * se está na home, continua sendo navegação de fragmento no mesmo documento,
+ * sem recarregar nada.
+ */
 export const NAV_LINKS = [
-  { label: "Portfólio", href: "#portfolio" },
-  { label: "Serviços", href: "#servicos" },
-  { label: "Processo", href: "#processo" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Trabalho", href: "/#trabalho" },
+  { label: "Serviços", href: "/#servicos" },
+  { label: "Processo", href: "/#processo" },
+  { label: "Perguntas", href: "/#perguntas" },
 ];
 
-export const TECH_CREDENTIALS = [
-  "Core Web Vitals Otimizado",
-  "Next.js & React",
-  "SSL / HTTPS Nativo",
-  "LGPD Compliant",
-  "Hospedagem Edge Global",
-  "Schema.org / SEO Técnico",
-  "Uptime 99.9%",
-  "Mobile-First Design",
+/**
+ * A fita de especificação que corre logo abaixo da capa.
+ *
+ * Antes eram duas fitas: uma de adjetivos técnicos e outra listando nichos
+ * ("Salão de Beleza", "Advocacia"…) que o estúdio ainda não atendeu. A segunda
+ * insinuava uma carteira de clientes inexistente, então saiu inteira.
+ *
+ * O que sobrou é uma lista de compromissos verificáveis: cada item é algo que
+ * o cliente pode conferir na entrega e cobrar se faltar. Adjetivo não entra.
+ */
+export const PROJECT_SPECS = [
+  "Código-fonte é seu, do primeiro commit",
+  "Contrato com CNPJ e nota fiscal",
+  "Sem mensalidade de plataforma",
+  "Desenhado para o celular primeiro",
+  "Estrutura de SEO técnico e Google Meu Negócio",
+  "Certificado SSL e hospedagem em rede global",
+  "Sem rastreador de terceiro, LGPD por padrão",
+  "Relatório de desempenho medido na entrega",
 ];
 
-export const BUSINESS_NICHES = [
-  "Salão de Beleza",
-  "Barbearia",
-  "E-commerce",
-  "Advocacia",
-  "Adega",
-  "Tabacaria",
-  "Restaurantes",
-  "Clínicas",
-  "Mecânicas",
-  "Academias",
+/**
+ * Transparência no lugar de volume de portfólio.
+ *
+ * O estúdio tem um case publicado. A saída honesta não é inventar mais cinco:
+ * é dizer o que se sabe e o que não se sabe, e deixar o visitante decidir com
+ * a informação na mão. Cliente que fecha sabendo disso reclama menos depois.
+ */
+export interface StudioFact {
+  label: string;
+  body: string;
+}
+
+export const STUDIO_FACTS: StudioFact[] = [
+  {
+    label: "Quem atende",
+    body: "Victor Xavier, sozinho. Você fala direto com quem escreve o código. Não existe atendimento, intermediário ou time terceirizado no meio do caminho.",
+  },
+  {
+    label: "Quantos projetos no ar",
+    body: "Um, publicado e linkado aqui embaixo para você abrir e conferir. O estúdio é novo, e preferimos que você veja um trabalho de verdade a uma grade de caixinhas escrito “em breve”.",
+  },
+  {
+    label: "Quanto custa",
+    body: "Valor fechado antes de a primeira linha ser escrita, com escopo por escrito. Metade na aprovação, metade na entrega. Não existe cobrança que aparece no meio do caminho.",
+  },
+  {
+    label: "O que acontece se der errado",
+    body: "O código é seu desde o começo e fica num repositório em seu nome. Se você quiser levar o projeto para outra pessoa, leva, sem ficar refém de plataforma ou de senha que só eu tenho.",
+  },
 ];
 
 export type PortfolioNiche =
@@ -77,8 +116,8 @@ export interface CaseStudy {
   /** Endereço do site no ar. Vazio esconde o botão. */
   liveUrl?: string;
   /**
-   * TODO: trocar por captura real do site (ex.: "/cases/aurea-studio.jpg").
-   * Sem imagem, o card usa a prévia estilizada em CSS.
+   * Captura do site em produção. Sem ela, o card cai para a prévia em CSS.
+   * Recapture rodando o site no ar e salvando em /public/cases/<slug>.webp.
    */
   image?: string;
   imageAlt?: string;
@@ -91,31 +130,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     niche: "Beleza",
     year: "2026",
     tagline:
-      "Um salão em São Paulo com cara de editorial de moda — e um agendamento que chega pronto no WhatsApp.",
+      "Um salão em São Paulo com cara de editorial de moda, e um agendamento que chega pronto no WhatsApp.",
     challenge:
       "Salão de bairro compete com dezenas de perfis iguais no Instagram, todos com a mesma estética bege e o mesmo “chama no direct”. O site precisava fazer duas coisas ao mesmo tempo: parecer caro o suficiente para justificar o ticket, e tirar do caminho o atrito de quem quer marcar horário mas não sabe nomear o serviço que precisa.",
     approach:
-      "Direção de arte comprometida no lugar do template de nicho: preto tinta, osso e oxblood, tipografia display em corpo monumental e uma voz monoespaçada para preço e duração. Sobre essa base, três ferramentas que resolvem problemas reais do negócio — um lookbook que se percorre como portfólio, um comparador de antes e depois, e um quiz que traduz “o que está te incomodando” em serviço com preço.",
+      "Direção de arte comprometida no lugar do template de nicho: preto tinta, osso e oxblood, tipografia display em corpo monumental e uma voz monoespaçada para preço e duração. Sobre essa base, três ferramentas que resolvem problemas reais do negócio. Um lookbook que se percorre como portfólio, um comparador de antes e depois, e um quiz que traduz “o que está te incomodando” em serviço com preço.",
     decisions: [
       {
         title: "Direção de arte antes de qualquer código",
-        body:
-          "A primeira versão era tecnicamente correta e visualmente covarde — creme, dourado, pilha de cards. O cliente reconheceu na hora: era o que qualquer gerador de template entrega. Refizemos sobre uma direção editorial noir e o site parou de ser intercambiável com o de qualquer outro negócio.",
+        body: "A primeira versão era tecnicamente correta e visualmente covarde: creme, dourado, pilha de cards. O cliente reconheceu na hora: era o que qualquer gerador de template entrega. Refizemos sobre uma direção editorial noir e o site parou de ser intercambiável com o de qualquer outro negócio.",
       },
       {
         title: "Contraste calculado, não estimado",
-        body:
-          "O oxblood da marca dá 1,93:1 sobre a tinta — reprova até no mínimo para elemento não textual. Em vez de aceitar no olho, medimos e criamos um segundo papel de acento só para texto. Nenhuma falha de contraste nas três páginas.",
+        body: "O oxblood da marca dá 1,93:1 sobre a tinta, e reprova até no mínimo para elemento não textual. Em vez de aceitar no olho, medimos e criamos um segundo papel de acento só para texto. Nenhuma falha de contraste nas três páginas.",
       },
       {
         title: "Agendamento que termina no WhatsApp",
-        body:
-          "O salão não tem agenda online integrada, então prometer “horário confirmado” seria mentira. O formulário monta o pedido em cliques — vários serviços, soma das durações, profissional, faixa de horário — e entrega a mensagem escrita. Menos ida e volta no chat, e a recepção responde com o horário exato.",
+        body: "O salão não tem agenda online integrada, então prometer “horário confirmado” seria mentira. O formulário monta o pedido em cliques (vários serviços, soma das durações, profissional, faixa de horário) e entrega a mensagem escrita. Menos ida e volta no chat, e a recepção responde com o horário exato.",
       },
       {
         title: "Mobile desenhado, não espremido",
-        body:
-          "A capa tem escala tipográfica própria no celular, o agendamento ganha uma barra de ação fixa com o total sempre à vista, e a equipe vira um trilho horizontal em vez de três retratos empilhados. São decisões diferentes das do desktop, não a mesma tela reduzida.",
+        body: "A capa tem escala tipográfica própria no celular, o agendamento ganha uma barra de ação fixa com o total sempre à vista, e a equipe vira um trilho horizontal em vez de três retratos empilhados. São decisões diferentes das do desktop, não a mesma tela reduzida.",
       },
     ],
     delivered: [
@@ -128,6 +163,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     stack: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion", "Vercel"],
     liveUrl: "https://aurea-studio-seven.vercel.app",
+    image: "/cases/aurea-studio.webp",
+    imageAlt:
+      "Capa do site do Áurea Studio: fundo preto tinta, o título “Beleza sem pressa” em serifa grande com a segunda linha em itálico oxblood, e uma faixa de informações com endereço, horário e o botão de agendar.",
   },
 ];
 
@@ -136,87 +174,110 @@ export const FEATURED_CASE = CASE_STUDIES[0];
 
 export interface ProcessStep {
   title: string;
+  /** Prazo típico da etapa. O número é o que torna a sequência informativa. */
+  duration: string;
   body: string;
+  /** O que cabe ao cliente nesta etapa — corta o "e agora, o que eu faço?". */
+  yours: string;
 }
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     title: "Diagnóstico",
-    body: "Entendemos o momento da sua empresa, mapeamos a concorrência na sua região e definimos a estrutura ideal.",
+    duration: "1 conversa",
+    body: "Eu olho o que você tem hoje, procuro seu negócio no Google como um cliente procuraria e vejo quem aparece na sua frente. Saio dessa conversa sabendo se consigo resolver.",
+    yours: "Contar o que o negócio faz e o que você quer que o site resolva.",
   },
   {
-    title: "Proposta & Escopo",
-    body: "Apresentamos a solução técnica, prazos cravados e investimento de forma clara e sem letras miúdas.",
+    title: "Proposta",
+    duration: "2 dias úteis",
+    body: "Escopo por escrito, prazo com data e valor fechado. Se algo não couber no orçamento, aparece na proposta como fora do escopo, não como surpresa depois.",
+    yours: "Ler, perguntar o que ficou vago e aprovar ou recusar.",
   },
   {
-    title: "Design & Engenharia",
-    body: "Construímos uma interface exclusiva, rápida e totalmente otimizada para celular e Google.",
+    title: "Design e construção",
+    duration: "1 a 4 semanas",
+    body: "Direção de arte primeiro, código depois. Você acompanha num endereço de teste desde os primeiros dias e comenta enquanto ainda é barato mudar.",
+    yours: "Enviar textos, fotos e logo. É a etapa que mais depende de você.",
   },
   {
-    title: "Publicação & Suporte",
-    body: "Colocamos seu site no ar no domínio oficial e garantimos suporte contínuo para você focar no seu negócio.",
+    title: "Publicação",
+    duration: "1 dia",
+    body: "O site vai para o seu domínio, com certificado, sitemap e Google Meu Negócio configurados. Você recebe o relatório de desempenho medido e o acesso ao repositório.",
+    yours: "Apontar o domínio, se já tiver um. Se não tiver, eu registro.",
   },
 ];
 
 export interface ServicePlan {
   id: string;
   name: string;
-  description: string;
-  features: string[];
+  /** Para quem é. Uma linha, sem adjetivo. */
+  audience: string;
+  /** Prazo típico. */
+  timeline: string;
+  /** O que entra. */
+  scope: string[];
   highlight?: boolean;
-  badge?: string;
   ctaLabel?: string;
-  /** Fragment slotted into the WhatsApp widget's message template: "...e gostaria de {ctaIntent}." */
+  /** Encaixa no molde da mensagem do widget: "...e gostaria de {ctaIntent}." */
   ctaIntent?: string;
 }
 
 export const SERVICE_PLANS: ServicePlan[] = [
   {
     id: "landing",
-    name: "Landing Page",
-    description: "Página única de alta conversão para campanhas e captação de leads.",
-    features: [
-      "Design exclusivo de alta conversão",
-      "Performance < 1s de carregamento",
-      "Estrutura otimizada para campanhas de tráfego pago",
-      "Integração com WhatsApp e formulários",
+    name: "Página única",
+    audience:
+      "Negócio que precisa de um endereço próprio para colocar no Instagram, no cartão e nos anúncios.",
+    timeline: "7 a 10 dias úteis",
+    scope: [
+      "Uma página, desenhada do zero para o seu negócio",
+      "Botão de WhatsApp com a mensagem já escrita",
+      "Estrutura pronta para campanha de tráfego pago",
+      "Google Meu Negócio configurado e ligado ao site",
     ],
     highlight: true,
-    badge: "Ideal para começar",
+    ctaIntent: "um orçamento de página única",
   },
   {
     id: "institucional",
-    name: "Site Institucional",
-    description: "Presença digital completa para consolidar autoridade e ranquear no Google.",
-    features: [
-      "Múltiplas páginas (Home, Sobre, Serviços, Contato)",
-      "SEO técnico completo + Google Meu Negócio",
-      "Painel de gestão de conteúdo",
-      "Certificado SSL e hospedagem premium",
+    name: "Site institucional",
+    audience:
+      "Empresa que precisa aparecer na busca por vários serviços e explicar o que faz com profundidade.",
+    timeline: "3 a 4 semanas",
+    scope: [
+      "Home, sobre, serviços e contato, ou a estrutura que o negócio pedir",
+      "Uma página por serviço, cada uma disputando sua própria busca",
+      "Painel para você editar textos sem depender de mim",
+      "SEO técnico completo, sitemap e dados estruturados",
     ],
+    ctaIntent: "um orçamento de site institucional",
   },
   {
     id: "ecommerce",
-    name: "Loja Online",
-    description: "E-commerce robusto para vender pela internet 24 horas por dia.",
-    features: [
-      "Catálogo de produtos ilimitado",
-      "Checkout otimizado + integração de pagamento",
-      "Gestão de estoque e pedidos",
-      "Frete automático e cupons de desconto",
+    name: "Loja online",
+    audience: "Quem vende produto e quer receber pedido e pagamento pelo site.",
+    timeline: "4 a 6 semanas",
+    scope: [
+      "Catálogo de produtos com estoque e variações",
+      "Checkout com Pix, cartão e boleto",
+      "Cálculo de frete e cupom de desconto",
+      "Painel de pedidos e relatório de vendas",
     ],
+    ctaIntent: "um orçamento de loja online",
   },
   {
     id: "sistema",
-    name: "Projeto sob consulta",
-    description: "Precisa de algo fora do padrão? Avaliamos seu caso e propomos uma solução sob medida.",
-    features: [
-      "Análise gratuita do seu processo",
-      "Proposta personalizada",
-      "Sem compromisso",
+    name: "Fora do padrão",
+    audience:
+      "Seu caso não é nenhum dos três acima: sistema interno, agendamento, integração, o que for.",
+    timeline: "Depende do escopo",
+    scope: [
+      "Conversa inicial sem custo para entender o problema",
+      "Proposta sob medida, ou a indicação de alguém melhor para o caso",
     ],
-    ctaLabel: "Conversar sobre meu projeto",
-    ctaIntent: "conversar sobre um projeto sob medida",
+    ctaLabel: "Conversar sobre meu caso",
+    ctaIntent: "conversar sobre um projeto fora do padrão",
   },
 ];
 
@@ -232,28 +293,32 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "O código e o site são de minha propriedade?",
-    answer: "Sim. Após a conclusão do pagamento, todo o código-fonte, domínio e conteúdo produzido são 100% seus. Não existe dependência ou 'aluguel' de plataforma.",
+    answer:
+      "São. O repositório é aberto em seu nome desde o primeiro dia e o domínio é registrado como seu. Depois de quitado o pagamento, código, domínio e conteúdo ficam com você, sem aluguel de plataforma e sem senha que só eu tenho.",
   },
   {
-    question: "Como funciona o modelo de pagamento 50/50?",
-    answer: "50% do valor é pago na aprovação do escopo/orçamento para iniciarmos o desenvolvimento, e os outros 50% na entrega final, após a aprovação do site em funcionamento.",
+    question: "Como funciona o pagamento?",
+    answer:
+      "Metade na aprovação do escopo, para começar, e metade na entrega, depois de você aprovar o site funcionando. Nada é cobrado antes de a proposta estar por escrito e assinada.",
   },
   {
     question: "O que acontece depois que o site é entregue?",
-    answer: "Oferecemos planos de manutenção contínua com atualizações, backups, monitoramento de performance e pequenos ajustes, para o site nunca ficar desatualizado ou vulnerável.",
+    answer:
+      "O site é seu e continua no ar sem depender de mim. Se quiser, existe um plano de manutenção com atualizações, backup, monitoramento e pequenos ajustes, mas é opcional, e recusar não deixa o site parado.",
   },
   {
     question: "Quanto tempo leva para o site ficar pronto?",
-    answer: "Landing Pages costumam levar de 7 a 10 dias úteis; Sites Institucionais e Lojas Online, de 3 a 5 semanas, dependendo da complexidade e do retorno de conteúdo pelo cliente.",
+    answer:
+      "Página única leva de 7 a 10 dias úteis. Site institucional, de 3 a 4 semanas. Loja online, de 4 a 6. O prazo conta a partir do momento em que os textos e as fotos estão comigo. Essa costuma ser a parte que mais atrasa.",
   },
   {
     question: "Vocês cuidam de domínio e hospedagem?",
-    answer: "Sim, cuidamos de toda a parte técnica, incluindo registro de domínio, hospedagem em infraestrutura de borda (edge) e certificado SSL, ou orientamos você a manter a titularidade em seu próprio nome, como preferir.",
+    answer:
+      "Cuido de tudo: registro do domínio, hospedagem em rede global e certificado SSL. A titularidade fica em seu nome, não no meu. Você pode conferir no registro.br a qualquer momento.",
   },
-];
-
-export const HERO_METRICS = [
-  { label: "Carregamento", technical: "LCP", value: 0.4, suffix: "s" },
-  { label: "Sempre no ar", technical: "Uptime", value: 99.9, suffix: "%" },
-  { label: "Sem travamentos", technical: "CLS", value: 0.01, suffix: "" },
+  {
+    question: "O estúdio é novo. Por que eu contrataria?",
+    answer:
+      "Porque dá para verificar antes de decidir. O único projeto no ar está linkado nesta página, aberto para você abrir, testar no seu celular e medir. O contrato tem CNPJ, o código fica em seu nome e o pagamento é metade só na entrega. Se isso não bastar, não contrate. É uma resposta legítima.",
+  },
 ];
