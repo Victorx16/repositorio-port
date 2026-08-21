@@ -33,12 +33,15 @@ import { whatsappLink } from "@/lib/constants";
  * onde a prova deveria estar. No celular, o instrumento vai para o fim: entre
  * o título e o parágrafo ele empurraria o botão para fora da primeira tela.
  *
- * A entrada usa o mesmo mecanismo da revelação por scroll: o observador marca
- * `data-revealed` assim que monta — estes blocos já estão em quadro — e a
- * transição faz o resto. Uma versão anterior usava `@keyframes` com atraso e
- * a capa inteira ficou invisível no teste, porque numa animação o estado final
- * só chega se o relógio avançar até o fim. Transição não tem esse problema:
- * o alvo é o estado computado, e a animação é só o caminho até ele.
+ * A capa é o único lugar da página que NÃO usa a revelação por scroll, e isso
+ * veio de medir em produção: com o texto em `opacity: 0` esperando hidratação,
+ * o Lighthouse acusou 2,4 s de Render Delay e um LCP de 3,3 s. O site estava
+ * atrasando a própria primeira dobra para animá-la.
+ *
+ * Aqui a entrada é `[data-enter-soft]`: CSS puro, só transformada, opacidade
+ * sempre 1. O texto pinta no primeiro quadro e o movimento acontece por cima.
+ * A máscara que fazia as linhas do título subirem por baixo também saiu — ela
+ * recorta o texto, e recorte esconde o maior elemento da página do LCP.
  */
 
 /**
@@ -63,7 +66,7 @@ const TITULO = [
 
 /** Atalho para a variável de atraso lida pelo CSS. */
 const atraso = (ms: number) =>
-  ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
+  ({ "--enter-delay": `${ms}ms` }) as CSSProperties;
 
 export function Hero() {
   const leitura = usePageSpeed();
@@ -78,7 +81,7 @@ export function Hero() {
       />
 
       <div className="shell relative pt-28 pb-16 sm:pt-32 sm:pb-24">
-        <div data-reveal="" style={atraso(0)}>
+        <div data-enter-soft="" style={atraso(0)}>
           <SpecLabel>São Paulo · ABC Paulista</SpecLabel>
         </div>
 
@@ -100,10 +103,10 @@ export function Hero() {
               // para descendente nenhuma ser decepada pelo overflow.
               <span
                 key={linha.texto}
-                data-reveal-line=""
-                style={atraso(120 + i * 80)}
+                data-enter-soft=""
+                style={atraso(60 + i * 70)}
                 className={cn(
-                  "block overflow-hidden pb-[0.08em]",
+                  "block pb-[0.08em]",
                   linha.peso,
                   // Respiro extra entre as duas metades da frase.
                   i === 2 && "mt-[0.14em]",
@@ -120,8 +123,8 @@ export function Hero() {
           {/* O carimbo: o instrumento que mede esta própria página.
               `self-end` encosta a base dele na base do título. */}
           <div
-            data-reveal=""
-            style={atraso(500)}
+            data-enter-soft=""
+            style={atraso(340)}
             className="order-3 lg:order-2 lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end"
           >
             <div className="border-rule bg-ink-2/70 border">
@@ -153,8 +156,8 @@ export function Hero() {
           {/* Parágrafo e ação. No desktop caem na segunda faixa, sob o título;
               no celular vêm antes do instrumento, para o botão não afundar. */}
           <div
-            data-reveal=""
-            style={atraso(400)}
+            data-enter-soft=""
+            style={atraso(260)}
             className="order-2 lg:order-3 lg:col-span-7 lg:row-start-2"
           >
             {/*

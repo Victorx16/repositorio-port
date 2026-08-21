@@ -334,6 +334,45 @@
   }
 }
 
+/* ==========================================================================
+   Entrada da capa — CSS puro, sem esconder nada.
+   --------------------------------------------------------------------------
+   A capa NÃO usa os gestos de revelação acima, e o motivo saiu de uma medição
+   em produção: com `opacity: 0` esperando a hidratação e o IntersectionObserver,
+   o Lighthouse mediu 2,4 s de Render Delay. O elemento já estava no HTML, com
+   fonte e CSS prontos; o que segurava a pintura era o próprio site.
+
+   LCP de 3,3 s numa página cujo argumento é abrir rápido não é um detalhe de
+   animação, é o produto se desmentindo na primeira dobra.
+
+   Aqui só a transformada é animada e a opacidade nunca sai de 1. O texto pinta
+   no primeiro quadro, na posição quase final, e o navegador registra o LCP ali.
+   Sem gate de JavaScript: é animação CSS, roda no carregamento. No pior caso —
+   relógio de animação congelado — o `both` segura o estado inicial, que já é
+   visível, e o texto fica 12px fora do lugar. Ninguém perde conteúdo.
+   ========================================================================== */
+
+[data-enter-soft] {
+  animation: enter-soft 0.7s var(--ease-out-expo) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes enter-soft {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-enter-soft] {
+    animation: none;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1;

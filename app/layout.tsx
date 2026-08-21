@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
-import { MotionConfig } from "framer-motion";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 import { WhatsAppWidgetProvider } from "@/components/whatsapp-widget/context";
-import { WhatsAppWidget } from "@/components/whatsapp-widget/widget";
+import { WhatsAppWidgetLazy } from "@/components/whatsapp-widget/lazy";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
 
@@ -18,22 +17,31 @@ import "./globals.css";
  * buscando as fontes no primeiro instante, no mesmo domínio e na mesma conexão.
  */
 
+/*
+ * Duas decisões aqui saíram da medição em produção, não do gosto.
+ *
+ * `latin-ext` cobre U+0100–024F: alfabetos do leste europeu. O português vive
+ * inteiro no subconjunto `latin` — á, ã, ç, é, ô e õ estão todos abaixo de
+ * U+00FF. Carregar latin-ext era pagar por glifos que nenhuma página serve.
+ *
+ * O eixo `wdth` do Archivo foi declarado numa versão anterior e nunca usado.
+ * Um eixo variável a mais engorda o arquivo inteiro mesmo sem ninguém acionar.
+ */
 const archivo = Archivo({
   variable: "--font-archivo",
-  subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
+  subsets: ["latin"],
   display: "swap",
 });
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
 });
 
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
 });
@@ -70,20 +78,18 @@ export default function RootLayout({
       className={`dark ${archivo.variable} ${instrumentSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="bg-background text-foreground flex min-h-full flex-col">
-        <MotionConfig reducedMotion="user">
-          <WhatsAppWidgetProvider>
-            {/* Atalho de teclado: primeira parada do Tab, invisível até receber foco. */}
-            <a
-              href="#conteudo"
-              className="bg-signal text-ink sr-only rounded-xs px-4 py-2 text-sm font-semibold focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-3 focus-visible:z-100"
-            >
-              Pular para o conteúdo
-            </a>
-            {children}
-            <RevealObserver />
-            <WhatsAppWidget />
-          </WhatsAppWidgetProvider>
-        </MotionConfig>
+        <WhatsAppWidgetProvider>
+          {/* Atalho de teclado: primeira parada do Tab, invisível até receber foco. */}
+          <a
+            href="#conteudo"
+            className="bg-signal text-ink sr-only rounded-xs px-4 py-2 text-sm font-semibold focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-3 focus-visible:z-100"
+          >
+            Pular para o conteúdo
+          </a>
+          {children}
+          <RevealObserver />
+          <WhatsAppWidgetLazy />
+        </WhatsAppWidgetProvider>
       </body>
     </html>
   );

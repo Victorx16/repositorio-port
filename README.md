@@ -81,29 +81,48 @@ Duas decisões que parecem detalhe e não são:
 ## Movimento
 
 Não há biblioteca de animação nas seções. Um `IntersectionObserver`
-(`components/ui/reveal-observer.tsx`) marca `data-revealed` nos elementos, e o
-CSS faz o resto com uma curva só (`cubic-bezier(0.16, 1, 0.3, 1)`). Só
-`opacity` e `transform` são animados — as duas propriedades que o compositor
+(`components/ui/reveal-observer.tsx`) marca `data-revealed` nos elementos e o
+CSS faz o resto, com uma curva só (`cubic-bezier(0.16, 1, 0.3, 1)`). Só
+`opacity` e `transform` são animados: as duas propriedades que o compositor
 resolve sem recalcular layout, o que mantém 60fps em Android de entrada.
 
-A versão anterior usava Framer Motion elemento a elemento: quarenta instâncias
-na home, cada uma com seus valores animados e seu laço de quadro. Hoje o Framer
-só sobrevive no widget de WhatsApp, onde `AnimatePresence` faz falta de verdade.
+### Três gestos, não um
 
-Três regras não negociáveis, cada uma paga com um bug encontrado em teste:
+O que faz uma página parecer animada por plugin não é ter movimento, é ter **um
+movimento só** aplicado a tudo. Cada gesto aqui pertence a um tipo de conteúdo:
+
+| Atributo | Quem veste | O gesto |
+| --- | --- | --- |
+| `data-reveal` | Blocos de texto | Sobe 10px e clareia |
+| `data-reveal-line` | Display e títulos de seção | Sobe por baixo de uma máscara |
+| `data-reveal-rule` | Fios de cota e traços de rótulo | É traçado da esquerda |
+
+**Ao acrescentar um gesto novo, inclua o atributo na consulta do observador.**
+Esquecer não falha barulhento: o elemento nunca é revelado e desaparece da
+página para sempre. Aconteceu com `data-reveal-rule` e custou o traço de todos
+os rótulos até alguém olhar a tela.
+
+### Microinterações
+
+Todas no mesmo vocabulário — um fio de 1px que é traçado, que é o que uma
+prancha faz quando alguém marca algo nela. As utilitárias vivem em
+`globals.css`: `.link-rule` (com `.link-group` no ancestral, porque os links
+têm 44px de alvo de toque e o fio precisa colar no texto, não na base da
+caixa), `.sweep-base` e `.row-spec`. Fora delas: o mais que gira e vira menos no
+acordeão, a mira que cruza a prévia do case, e o fio que trava sob a leitura do
+instrumento quando o número para de subir.
+
+### Regras não negociáveis
 
 1. **O conteúdo nasce visível.** O estado escondido só existe dentro de
    `@media (scripting: enabled)`. Onde essa consulta não casa, o visitante perde
-   a animação e nunca o texto. O Framer fazia o oposto — serializava
-   `opacity: 0` no HTML do servidor —, e bastava o script falhar para a página
-   chegar em branco.
+   a animação e nunca o texto.
 2. **Transição, nunca `@keyframes` com atraso.** Numa animação, o estado final
    só é alcançado se o relógio avançar até o fim; uma capa inteira ficou
-   invisível no teste por causa disso. Com transição, `[data-revealed]` já é o
-   estado computado e a animação é só o caminho até ele.
-3. **Nenhuma animação em laço.** O que havia — esteira de credenciais, brilho
-   varrendo o botão, grade em perspectiva no rodapé, anéis pulsando — foi
-   removido: mantinha a GPU do celular acordada sem acrescentar argumento.
+   invisível no teste por causa disso.
+3. **Nenhuma animação em laço.** Esteira, brilho varrendo botão, grade em
+   perspectiva e anéis pulsando foram todos removidos: mantinham a GPU do
+   celular acordada sem acrescentar argumento.
 
 **Movimento reduzido** é respeitado em duas camadas: a media query em
 `globals.css` zera transições e transformadas, e a contagem do instrumento zera
@@ -119,9 +138,13 @@ vez de disfarçar. Vale para quem for mexer aqui depois:
 - **Nada de volume falso.** Não repor a grade de portfólio com "case em breve":
   seis caixas vazias ensinam o visitante a desconfiar também da que é real. O
   campo "Projetos no ar" no rodapé mostra o número verdadeiro.
-- **Cada cliente tem identidade própria.** A prévia do Áurea usa a paleta dele —
-  preto tinta, osso e oxblood —, que não tem nada a ver com esta página. O
-  contraste é proposital e está explicado embaixo da imagem.
+- **Cada cliente tem identidade própria.** A prévia do Áurea é a captura do site
+  real, com a paleta dele: preto tinta, osso e oxblood, que não tem nada a ver
+  com esta página. O contraste é proposital e não precisa de legenda explicando.
+- **Imagem é prova, não ilustração.** Para atualizar a captura, rode o site do
+  cliente e salve em `public/cases/<slug>.webp`, depois aponte `image` no case
+  em `lib/constants.ts`. Sem `image`, o componente cai para a maquete em CSS e
+  a página se declara ilustrativa.
 
 ---
 

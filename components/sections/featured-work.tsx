@@ -60,7 +60,9 @@ export function FeaturedWork() {
             aria-label={`Abrir o site do ${caso.client} em uma nova aba`}
             className="group/mira border-rule relative block aspect-[4/3] overflow-hidden border sm:aspect-[16/9]"
           >
-            <CasePreview src={caso.image} alt={caso.imageAlt} priority />
+            {/* Sem `priority`: a prévia está bem abaixo da dobra. Pré-carregá-la
+                disputava banda com a fonte que o LCP estava esperando. */}
+            <CasePreview src={caso.image} alt={caso.imageAlt} />
 
             <span
               aria-hidden="true"

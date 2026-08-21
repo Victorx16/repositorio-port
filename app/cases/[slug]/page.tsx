@@ -114,7 +114,7 @@ export default async function CasePage({
             {/* `relative` não é decorativo: o next/image usa `fill`, que
                 posiciona a imagem contra o ancestral posicionado mais próximo. */}
             <div className="border-rule relative aspect-[4/3] overflow-hidden border sm:aspect-[16/9]">
-              <CasePreview src={caso.image} alt={caso.imageAlt} priority />
+              <CasePreview src={caso.image} alt={caso.imageAlt} />
             </div>
             {!caso.image && (
               <p className="text-faint mt-4 font-mono text-[0.625rem] tracking-[0.14em] uppercase">

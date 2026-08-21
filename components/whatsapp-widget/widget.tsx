@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -98,183 +98,190 @@ export function WhatsAppWidget() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-[70] sm:bottom-6 sm:right-6">
-      <AnimatePresence mode="wait">
-        {isOpen ? (
-          <motion.div
-            key="panel"
-            role="dialog"
-            aria-label="Iniciar conversa no WhatsApp"
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.97 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="w-[calc(100vw-2.5rem)] max-w-sm overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)]"
-          >
-            <div className="flex items-start justify-between gap-3 border-b border-border bg-background-alt px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary/15 font-display text-sm font-semibold text-secondary">
-                  {AGENT_INITIALS}
-                </div>
-                <div>
-                  <p className="font-display text-sm font-semibold text-foreground">
-                    {AGENT_NAME}{" "}
-                    <span className="font-sans font-normal text-muted-foreground">
-                      · {AGENT_ROLE}
-                    </span>
-                  </p>
-                  <p className="text-mute mt-1 flex items-center gap-2 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
-                    <span
-                      aria-hidden="true"
-                      className="bg-signal size-1.5 shrink-0"
-                    />
-                    Responde no mesmo dia útil
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={close}
-                aria-label="Fechar"
-                className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-
-            <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="space-y-4 px-5 py-5"
+    // O MotionConfig veio do layout para cá: lá em cima ele obrigava o Framer a
+    // entrar no pacote inicial, mesmo com as seções já não usando animação por
+    // biblioteca. Aqui ele viaja junto com quem realmente precisa dele.
+    <MotionConfig reducedMotion="user">
+      <div className="fixed right-5 bottom-5 z-[70] sm:right-6 sm:bottom-6">
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="panel"
+              role="dialog"
+              aria-label="Iniciar conversa no WhatsApp"
+              initial={{ opacity: 0, y: 16, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.97 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="w-[calc(100vw-2.5rem)] max-w-sm overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)]"
             >
-              {/* Honeypot: hidden from real users, catches basic bots. */}
-              <input
-                type="text"
-                name="company"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                className="absolute left-[-9999px] h-0 w-0 opacity-0"
-              />
-
-              <div>
-                <label
-                  htmlFor="wa-widget-name"
-                  className="mb-1.5 block text-xs font-medium text-muted-foreground"
+              <div className="flex items-start justify-between gap-3 border-b border-border bg-background-alt px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary/15 font-display text-sm font-semibold text-secondary">
+                    {AGENT_INITIALS}
+                  </div>
+                  <div>
+                    <p className="font-display text-sm font-semibold text-foreground">
+                      {AGENT_NAME}{" "}
+                      <span className="font-sans font-normal text-muted-foreground">
+                        · {AGENT_ROLE}
+                      </span>
+                    </p>
+                    <p className="text-mute mt-1 flex items-center gap-2 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
+                      <span
+                        aria-hidden="true"
+                        className="bg-signal size-1.5 shrink-0"
+                      />
+                      Responde no mesmo dia útil
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={close}
+                  aria-label="Fechar"
+                  className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
-                  Seu nome
-                </label>
-                <input
-                  ref={nameInputRef}
-                  id="wa-widget-name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    if (errors.name)
-                      setErrors((p) => ({ ...p, name: undefined }));
-                  }}
-                  placeholder="Como podemos te chamar?"
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={
-                    errors.name ? "wa-widget-name-error" : undefined
-                  }
-                  className={cn(
-                    "w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
-                    errors.name ? "border-destructive/50" : "border-border",
-                  )}
-                />
-                {errors.name && (
-                  <p
-                    id="wa-widget-name-error"
-                    className="mt-1.5 text-xs text-destructive"
-                  >
-                    {errors.name}
-                  </p>
-                )}
+                  <X className="size-4" />
+                </button>
               </div>
 
-              <div>
-                <label
-                  htmlFor="wa-widget-phone"
-                  className="mb-1.5 block text-xs font-medium text-muted-foreground"
-                >
-                  Telefone
-                </label>
-                <div className="flex gap-2">
-                  <select
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
-                    aria-label="Código do país"
-                    className="shrink-0 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus:border-primary/50"
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+                className="space-y-4 px-5 py-5"
+              >
+                {/* Honeypot: hidden from real users, catches basic bots. */}
+                <input
+                  type="text"
+                  name="company"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                />
+
+                <div>
+                  <label
+                    htmlFor="wa-widget-name"
+                    className="mb-1.5 block text-xs font-medium text-muted-foreground"
                   >
-                    {COUNTRY_CODES.map((c) => (
-                      <option key={c.code} value={c.code}>
-                        {c.code}
-                      </option>
-                    ))}
-                  </select>
+                    Seu nome
+                  </label>
                   <input
-                    id="wa-widget-phone"
-                    type="tel"
-                    inputMode="numeric"
-                    value={phone}
+                    ref={nameInputRef}
+                    id="wa-widget-name"
+                    type="text"
+                    value={name}
                     onChange={(e) => {
-                      setPhone(formatPhone(e.target.value));
-                      if (errors.phone)
-                        setErrors((p) => ({ ...p, phone: undefined }));
+                      setName(e.target.value);
+                      if (errors.name)
+                        setErrors((p) => ({ ...p, name: undefined }));
                     }}
-                    placeholder="(11) 99999-9999"
-                    aria-invalid={Boolean(errors.phone)}
+                    placeholder="Como podemos te chamar?"
+                    aria-invalid={Boolean(errors.name)}
                     aria-describedby={
-                      errors.phone ? "wa-widget-phone-error" : undefined
+                      errors.name ? "wa-widget-name-error" : undefined
                     }
                     className={cn(
-                      "w-full min-w-0 rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
-                      errors.phone ? "border-destructive/50" : "border-border",
+                      "w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
+                      errors.name ? "border-destructive/50" : "border-border",
                     )}
                   />
+                  {errors.name && (
+                    <p
+                      id="wa-widget-name-error"
+                      className="mt-1.5 text-xs text-destructive"
+                    >
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
-                {errors.phone && (
-                  <p
-                    id="wa-widget-phone-error"
-                    className="mt-1.5 text-xs text-destructive"
-                  >
-                    {errors.phone}
-                  </p>
-                )}
-              </div>
 
-              <button
-                type="submit"
-                className="bg-signal text-ink hover:bg-[#ff7440] flex h-12 w-full items-center justify-center gap-2.5 rounded-xs font-mono text-[0.7rem] font-medium tracking-[0.14em] uppercase transition-colors duration-200"
-              >
-                <Send className="size-4" aria-hidden="true" />
-                Iniciar conversa
-              </button>
-              <p className="text-center text-xs text-muted-foreground">
-                Você será direcionado pro WhatsApp com a mensagem pronta.
-              </p>
-            </form>
-          </motion.div>
-        ) : (
-          <motion.button
-            key="trigger"
-            type="button"
-            onClick={() => open()}
-            aria-label="Abrir conversa no WhatsApp"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="bg-signal text-ink relative flex size-14 items-center justify-center rounded-full shadow-[0_8px_28px_-6px_rgba(255,90,31,0.5)] transition-transform duration-200 hover:scale-105 active:scale-100"
-          >
-            <MessageCircle className="size-6" aria-hidden="true" />
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </div>
+                <div>
+                  <label
+                    htmlFor="wa-widget-phone"
+                    className="mb-1.5 block text-xs font-medium text-muted-foreground"
+                  >
+                    Telefone
+                  </label>
+                  <div className="flex gap-2">
+                    <select
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      aria-label="Código do país"
+                      className="shrink-0 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus:border-primary/50"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.code} value={c.code}>
+                          {c.code}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      id="wa-widget-phone"
+                      type="tel"
+                      inputMode="numeric"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(formatPhone(e.target.value));
+                        if (errors.phone)
+                          setErrors((p) => ({ ...p, phone: undefined }));
+                      }}
+                      placeholder="(11) 99999-9999"
+                      aria-invalid={Boolean(errors.phone)}
+                      aria-describedby={
+                        errors.phone ? "wa-widget-phone-error" : undefined
+                      }
+                      className={cn(
+                        "w-full min-w-0 rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-faint focus:border-primary/50",
+                        errors.phone
+                          ? "border-destructive/50"
+                          : "border-border",
+                      )}
+                    />
+                  </div>
+                  {errors.phone && (
+                    <p
+                      id="wa-widget-phone-error"
+                      className="mt-1.5 text-xs text-destructive"
+                    >
+                      {errors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-signal text-ink hover:bg-[#ff7440] flex h-12 w-full items-center justify-center gap-2.5 rounded-xs font-mono text-[0.7rem] font-medium tracking-[0.14em] uppercase transition-colors duration-200"
+                >
+                  <Send className="size-4" aria-hidden="true" />
+                  Iniciar conversa
+                </button>
+                <p className="text-center text-xs text-muted-foreground">
+                  Você será direcionado pro WhatsApp com a mensagem pronta.
+                </p>
+              </form>
+            </motion.div>
+          ) : (
+            <motion.button
+              key="trigger"
+              type="button"
+              onClick={() => open()}
+              aria-label="Abrir conversa no WhatsApp"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-signal text-ink relative flex size-14 items-center justify-center rounded-full shadow-[0_8px_28px_-6px_rgba(255,90,31,0.5)] transition-transform duration-200 hover:scale-105 active:scale-100"
+            >
+              <MessageCircle className="size-6" aria-hidden="true" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+    </MotionConfig>
   );
 }
