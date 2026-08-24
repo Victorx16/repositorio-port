@@ -4,8 +4,8 @@ export const SITE = {
   url: "https://codevx.com.br",
   tagline: "Estúdio de engenharia web",
   whatsappNumber: "5511966415434",
+  /** Quem assina o trabalho. O atendimento hoje é como pessoa física. */
   legalName: "Victor Xavier Cordeiro Machado",
-  cnpj: "64.556.190/0001-00",
   region: "São Paulo & ABC Paulista",
   /** Ano de abertura. Aparece no carimbo do rodapé — não escondemos ser novo. */
   since: "2026",
@@ -44,7 +44,7 @@ export const NAV_LINKS = [
  */
 export const PROJECT_SPECS = [
   "Código-fonte é seu, do primeiro commit",
-  "Contrato com CNPJ e nota fiscal",
+  "Escopo, prazo e valor definidos por escrito",
   "Sem mensalidade de plataforma",
   "Desenhado para o celular primeiro",
   "Estrutura de SEO técnico e Google Meu Negócio",
@@ -291,7 +291,7 @@ export interface FaqItem {
 export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Existe contrato e segurança jurídica no projeto?",
-    answer: `Sim. Todo projeto é formalizado por contrato, emitido por ${SITE.legalName} (CNPJ ${SITE.cnpj}), com escopo, prazos e valores definidos antes do início do trabalho. Você tem nota fiscal e respaldo jurídico completo.`,
+    answer: `Sim. Todo projeto começa com escopo, prazos e valores definidos por escrito e acordados antes de a primeira linha ser escrita, assinados por ${SITE.legalName}. Nada é cobrado fora do que estiver combinado ali.`,
   },
   {
     question: "O código e o site são de minha propriedade?",
@@ -321,6 +321,6 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "O estúdio é novo. Por que eu contrataria?",
     answer:
-      "Porque dá para verificar antes de decidir. O único projeto no ar está linkado nesta página, aberto para você abrir, testar no seu celular e medir. O contrato tem CNPJ, o código fica em seu nome e o pagamento é metade só na entrega. Se isso não bastar, não contrate. É uma resposta legítima.",
+      "Porque dá para verificar antes de decidir. O único projeto no ar está linkado nesta página, aberto para você abrir, testar no seu celular e medir. O escopo fica por escrito, o código fica em seu nome e o pagamento é metade só na entrega. Se isso não bastar, não contrate. É uma resposta legítima.",
   },
 ];

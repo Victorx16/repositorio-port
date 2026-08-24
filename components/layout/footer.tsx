@@ -82,13 +82,8 @@ export function Footer() {
           {/* O carimbo. As bordas são só topo e esquerda em cada célula; a
               moldura externa fecha o quadro, então nenhum fio sai duplicado. */}
           <dl className="border-rule grid grid-cols-2 border-r border-b sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
-            <CampoCarimbo rotulo="Responsável" className="col-span-2">
+            <CampoCarimbo rotulo="Responsável" className="col-span-3">
               {SITE.legalName}
-            </CampoCarimbo>
-            <CampoCarimbo rotulo="CNPJ">
-              <span className="tnum font-mono text-[0.8125rem]">
-                {SITE.cnpj}
-              </span>
             </CampoCarimbo>
 
             <CampoCarimbo rotulo="Região atendida" className="col-span-2">
