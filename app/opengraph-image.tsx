@@ -6,6 +6,15 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /**
+ * A imagem é gerada uma vez, no build, e vira um PNG no disco.
+ *
+ * Sem esta linha o export estático falha: o Next trata rota de imagem como
+ * dinâmica por padrão e recusa gerar o site sem servidor. Como o conteúdo aqui
+ * não depende de requisição nenhuma, declarar `force-static` é a verdade.
+ */
+export const dynamic = "force-static";
+
+/**
  * A imagem de compartilhamento é a capa em miniatura: mesma malha de
  * coordenadas, mesmo carimbo, mesma frase. Quem clica no link do WhatsApp já
  * chega tendo visto a página.
