@@ -1,5 +1,7 @@
 export const SITE = {
   name: "Code VX",
+  /** Fonte única do endereço. Usado em metadata, sitemap e dados estruturados. */
+  url: "https://codevx.com.br",
   tagline: "Estúdio de engenharia web",
   whatsappNumber: "5511966415434",
   legalName: "Victor Xavier Cordeiro Machado",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { StructuredData } from "@/components/seo/structured-data";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 import { WhatsAppWidgetProvider } from "@/components/whatsapp-widget/context";
 import { WhatsAppWidgetLazy } from "@/components/whatsapp-widget/lazy";
@@ -51,10 +52,13 @@ const description =
   "Sites feitos sob medida para negócios de São Paulo e ABC Paulista: abrem antes de o cliente desistir, aparecem na busca e trazem a conversa pronta para o WhatsApp.";
 
 export const metadata: Metadata = {
-  // TODO: trocar pelo domínio definitivo assim que registrado/apontado.
-  metadataBase: new URL("https://codevx.com.br"),
+  metadataBase: new URL(SITE.url),
   title,
   description,
+  // Canônica explícita: com domínio próprio, o mesmo conteúdo passa a existir
+  // também no endereço .netlify.app. Sem esta linha o Google escolhe sozinho
+  // qual indexar, e às vezes escolhe o errado.
+  alternates: { canonical: "/" },
   openGraph: {
     title,
     description,
@@ -87,6 +91,7 @@ export default function RootLayout({
             Pular para o conteúdo
           </a>
           {children}
+          <StructuredData />
           <RevealObserver />
           <WhatsAppWidgetLazy />
         </WhatsAppWidgetProvider>

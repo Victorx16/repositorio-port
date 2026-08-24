@@ -99,8 +99,8 @@ export default async function Image() {
           lineHeight: 1.02,
         }}
       >
-        <span>Seu cliente desiste</span>
-        <span>em três segundos.</span>
+        <span>Você é bom no que faz.</span>
+        <span>Seu site precisa provar.</span>
       </div>
 
       <div
