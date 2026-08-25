@@ -58,11 +58,18 @@ export function FeaturedWork() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Abrir o site do ${caso.client} em uma nova aba`}
-            className="group/mira border-rule relative block aspect-[4/3] overflow-hidden border sm:aspect-[16/9]"
+            // A moldura acompanha a captura de cada largura: retrato de
+            // celular no celular, paisagem no desktop. Recortar uma na
+            // proporção da outra decepava o título do cliente.
+            className="group/mira border-rule relative block aspect-[43/61] overflow-hidden border sm:aspect-[16/9]"
           >
             {/* Sem `priority`: a prévia está bem abaixo da dobra. Pré-carregá-la
                 disputava banda com a fonte que o LCP estava esperando. */}
-            <CasePreview src={caso.image} alt={caso.imageAlt} />
+            <CasePreview
+              src={caso.image}
+              srcMobile={caso.imageMobile}
+              alt={caso.imageAlt}
+            />
 
             <span
               aria-hidden="true"

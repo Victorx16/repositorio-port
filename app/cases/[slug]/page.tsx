@@ -112,10 +112,14 @@ export default async function CasePage({
         {/* Prévia */}
         <section className="border-rule bg-ink-2 border-b">
           <div className="shell py-12 sm:py-16">
-            {/* `relative` não é decorativo: o next/image usa `fill`, que
-                posiciona a imagem contra o ancestral posicionado mais próximo. */}
-            <div className="border-rule relative aspect-[4/3] overflow-hidden border sm:aspect-[16/9]">
-              <CasePreview src={caso.image} alt={caso.imageAlt} />
+            {/* A moldura acompanha a captura de cada largura: retrato de
+                celular no celular, paisagem no desktop. */}
+            <div className="border-rule relative aspect-[43/61] overflow-hidden border sm:aspect-[16/9]">
+              <CasePreview
+                src={caso.image}
+                srcMobile={caso.imageMobile}
+                alt={caso.imageAlt}
+              />
             </div>
             {!caso.image && (
               <p className="text-faint mt-4 font-mono text-[0.625rem] tracking-[0.14em] uppercase">

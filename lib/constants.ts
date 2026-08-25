@@ -118,10 +118,16 @@ export interface CaseStudy {
   /** Endereço do site no ar. Vazio esconde o botão. */
   liveUrl?: string;
   /**
-   * Captura do site em produção. Sem ela, o card cai para a prévia em CSS.
-   * Recapture rodando o site no ar e salvando em /public/cases/<slug>.webp.
+   * Captura do site em produção, em desktop. Sem ela, o card cai para a
+   * prévia em CSS. Recapture rodando o site no ar e salvando em
+   * /public/cases/<slug>.webp.
    */
   image?: string;
+  /**
+   * Captura do MESMO site num celular, não a de desktop recortada. É o que
+   * evita decepar o título do cliente numa moldura vertical.
+   */
+  imageMobile?: string;
   imageAlt?: string;
 }
 
@@ -163,9 +169,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Contraste WCAG AA verificado por auditoria automatizada em todas as páginas",
       "Fotos de 3 MB servidas como WebP de ~120 KB",
     ],
-    stack: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion", "Vercel"],
+    stack: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion"],
     liveUrl: "https://aurea-studio-seven.vercel.app",
     image: "/cases/aurea-studio.webp",
+    imageMobile: "/cases/aurea-studio-mobile.webp",
     imageAlt:
       "Capa do site do Áurea Studio: fundo preto tinta, o título “Beleza sem pressa” em serifa grande com a segunda linha em itálico oxblood, e uma faixa de informações com endereço, horário e o botão de agendar.",
   },
