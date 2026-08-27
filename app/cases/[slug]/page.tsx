@@ -35,17 +35,34 @@ export async function generateMetadata({
   const caso = CASE_STUDIES.find((c) => c.slug === slug);
   if (!caso) return {};
 
-  const title = `${caso.client}: case de ${caso.niche}`;
+  /*
+   * O título automático saía como "Áurea Studio: case de Beleza": 28 dos ~60
+   * caracteres que a busca mostra, gastos numa palavra que ninguém digita.
+   * Quem procura escreve "site para salão de beleza em São Paulo". Quando o
+   * case declara os próprios termos, eles mandam.
+   */
+  const title = caso.metaTitle ?? `${caso.client}: case de ${caso.niche}`;
+  const description = caso.metaDescription ?? caso.tagline;
+
   return {
     title,
-    description: caso.tagline,
+    description,
     alternates: { canonical: `/cases/${caso.slug}` },
     openGraph: {
       title,
-      description: caso.tagline,
+      description,
       siteName: SITE.name,
       locale: "pt_BR",
       type: "article",
+    },
+    /*
+     * Sem este bloco a página herdava o twitter: do layout raiz, e o case se
+     * apresentava no X com o título e a descrição da home.
+     */
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }

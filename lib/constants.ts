@@ -129,6 +129,13 @@ export interface CaseStudy {
    */
   imageMobile?: string;
   imageAlt?: string;
+  /**
+   * Título e descrição para a busca. Sem eles, a página cai numa composição
+   * automática do nome do cliente com o nicho, que fica curta e usa palavras
+   * que ninguém digita. Aqui entram os termos que a pessoa realmente busca.
+   */
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -175,6 +182,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     imageMobile: "/cases/aurea-studio-mobile.webp",
     imageAlt:
       "Capa do site do Áurea Studio: fundo preto tinta, o título “Beleza sem pressa” em serifa grande com a segunda linha em itálico oxblood, e uma faixa de informações com endereço, horário e o botão de agendar.",
+    metaTitle: "Site para salão de beleza em São Paulo: case Áurea Studio",
+    metaDescription:
+      "Um salão de bairro em São Paulo trocou o template bege por direção de arte própria e um agendamento que chega pronto no WhatsApp. Veja como foi feito.",
   },
 ];
 
