@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, SITE, whatsappLink } from "@/lib/constants";
 import { Action } from "@/components/ui/action";
+import { Wordmark } from "@/components/ui/wordmark";
 import {
   Sheet,
   SheetContent,
@@ -50,9 +51,11 @@ export function Header() {
       <div className="shell flex h-18 items-center justify-between gap-6">
         <Link
           href="/#top"
-          className="font-display text-paper -my-1 flex min-h-11 items-center text-lg font-semibold tracking-tight"
+          className="-my-1 flex min-h-11 items-center"
+          aria-label="Code VX, ir para o início"
         >
-          Code<span className="text-signal">VX</span>
+          {/* `priority`: a marca é a primeira coisa pintada no topo. */}
+          <Wordmark className="h-[22px]" priority />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">
@@ -105,8 +108,9 @@ export function Header() {
             className="bg-ink border-rule w-full max-w-sm border-l"
           >
             <SheetHeader className="border-rule flex-row items-center justify-between border-b">
-              <SheetTitle className="font-display text-paper text-base">
-                Code<span className="text-signal">VX</span>
+              <SheetTitle>
+                <Wordmark className="h-[18px]" />
+                <span className="sr-only">Code VX</span>
               </SheetTitle>
               <SheetClose
                 render={

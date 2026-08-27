@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CASE_STUDIES, NAV_LINKS, SITE, whatsappLink } from "@/lib/constants";
 import { Action } from "@/components/ui/action";
+import { Wordmark } from "@/components/ui/wordmark";
 
 /**
  * Rodapé — o carimbo da prancha.
@@ -46,9 +47,7 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Identificação e canal */}
           <div className="lg:col-span-4">
-            <span className="font-display text-paper text-2xl font-semibold tracking-tight">
-              Code<span className="text-signal">VX</span>
-            </span>
+            <Wordmark className="h-7" />
             <p className="text-mute mt-4 max-w-xs leading-relaxed">
               {SITE.tagline}. Um site por vez, feito para o negócio que vai
               usá-lo.
