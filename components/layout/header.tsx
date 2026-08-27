@@ -54,8 +54,7 @@ export function Header() {
           className="-my-1 flex min-h-11 items-center"
           aria-label="Code VX, ir para o início"
         >
-          {/* `priority`: a marca é a primeira coisa pintada no topo. */}
-          <Wordmark className="h-[22px]" priority />
+          <Wordmark className="h-[22px]" />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">
@@ -110,7 +109,6 @@ export function Header() {
             <SheetHeader className="border-rule flex-row items-center justify-between border-b">
               <SheetTitle>
                 <Wordmark className="h-[18px]" />
-                <span className="sr-only">Code VX</span>
               </SheetTitle>
               <SheetClose
                 render={
