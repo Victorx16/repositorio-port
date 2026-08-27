@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/constants";
+import { WORDMARK_RATIO, wordmarkSvg } from "@/lib/wordmark";
 
 export const alt = `${SITE.name}: estúdio de engenharia web em ${SITE.region}`;
 export const size = { width: 1200, height: 630 };
@@ -29,6 +30,8 @@ export default async function Image() {
   const SIGNAL = "#ff5a1f";
   const RULE = "#1e2b45";
   const MUTE = "#8fa0b8";
+  /** Altura da marca no rodapé da imagem. */
+  const ALTURA_MARCA = 40;
 
   return new ImageResponse(
     <div
@@ -112,18 +115,24 @@ export default async function Image() {
           paddingTop: 28,
         }}
       >
-        <span
-          style={{
-            display: "flex",
-            color: PAPER,
-            fontSize: 34,
-            fontWeight: 700,
-            letterSpacing: -1,
-          }}
-        >
-          Code
-          <span style={{ color: SIGNAL }}>VX</span>
-        </span>
+        {/*
+          A marca de verdade, não mais "CodeVX" desenhado como texto.
+
+          O Satori não renderiza componentes SVG, mas aceita `<img>` com data
+          URI. `encodeURIComponent` em vez de base64 porque o SVG é texto: sai
+          menor e continua legível se alguém abrir o arquivo para depurar.
+
+          A altura manda e a largura sai da proporção medida do contorno. Fixar
+          as duas à mão deformaria a marca no dia em que ela mudasse.
+        */}
+        <img
+          src={`data:image/svg+xml;utf8,${encodeURIComponent(
+            wordmarkSvg(PAPER, SIGNAL),
+          )}`}
+          height={ALTURA_MARCA}
+          width={Math.round(ALTURA_MARCA * WORDMARK_RATIO)}
+          alt={SITE.name}
+        />
         <span
           style={{
             display: "flex",
