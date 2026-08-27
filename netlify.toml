@@ -43,3 +43,25 @@
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# ---------------------------------------------------------------------------
+# Tipo das imagens de compartilhamento.
+#
+# As rotas de imagem do Next geram arquivos SEM extensão (`out/opengraph-image`),
+# e o Netlify então os serve como `text/plain`. O `nosniff` acima, que existe
+# por segurança, fecha a última saída: o leitor de link fica proibido de
+# adivinhar que aquilo é um PNG, e o cartão do WhatsApp aparece sem figura.
+#
+# Estas regras declaram o tipo verdadeiro. Precisam acompanhar as rotas de
+# imagem que existirem: hoje a da home e a de cada case.
+# ---------------------------------------------------------------------------
+
+[[headers]]
+  for = "/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"
+
+[[headers]]
+  for = "/cases/:slug/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"
