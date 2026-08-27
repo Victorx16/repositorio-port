@@ -341,3 +341,193 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Porque dá para verificar antes de decidir. O único projeto no ar está linkado nesta página, aberto para você abrir, testar no seu celular e medir. O escopo fica por escrito, o código fica em seu nome e o pagamento é metade só na entrega. Se isso não bastar, não contrate. É uma resposta legítima.",
   },
 ];
+
+/* -------------------------------------------------------------------------
+ * Páginas de serviço.
+ *
+ * A home tinha os quatro escopos numa seção só, disputando uma única busca.
+ * Página que não existe não aparece em resultado nenhum, e "criação de site
+ * institucional em Santo André" nunca ia ranquear dentro de uma linha de
+ * tabela.
+ *
+ * Só dois serviços ganham página. Loja online e projetos fora do padrão ficam
+ * de fora de propósito: escrever uma página detalhada sobre checkout e estoque
+ * sugeriria um repertório que ainda não existe, que é o mesmo teatro de volume
+ * recusado quando o site foi desenhado em torno de um case só.
+ *
+ * O que cada página promete é escopo e prazo, não histórico. A prova mora no
+ * case do Áurea, e é para lá que elas apontam.
+ * ---------------------------------------------------------------------- */
+
+export interface ServicePageFaq {
+  question: string;
+  answer: string;
+}
+
+export interface ServicePage {
+  /** Vira /servicos/<slug>. Usa o termo que a pessoa digita, não o nome interno. */
+  slug: string;
+  /** Liga de volta à linha correspondente na tabela da home. */
+  planId: string;
+  name: string;
+  metaTitle: string;
+  metaDescription: string;
+  headline: string;
+  intro: string;
+  /** Para quem serve. */
+  fitFor: string[];
+  /**
+   * Para quem não serve, com o serviço certo quando existe. Dizer não é o que
+   * dá peso ao sim, e evita a reunião que morre no quinto minuto.
+   */
+  notFor: { text: string; leadTo?: string }[];
+  includes: { title: string; body: string }[];
+  timeline: string;
+  faq: ServicePageFaq[];
+  ctaIntent: string;
+}
+
+export const SERVICE_PAGES: ServicePage[] = [
+  {
+    slug: "landing-page",
+    planId: "landing",
+    name: "Landing page",
+    metaTitle: "Criação de landing page em São Paulo e ABC Paulista",
+    metaDescription:
+      "Uma página sob medida para transformar visita em conversa no WhatsApp. Fica pronta em 7 a 10 dias úteis, com desempenho medido e sem mensalidade.",
+    headline: "Uma página. Um objetivo: virar conversa.",
+    intro:
+      "Quem chega numa landing page tem uma decisão para tomar, não um site para explorar. Por isso ela não tem menu com seis destinos nem seção sobre a história da empresa. Ela tem um caminho, e esse caminho termina no seu WhatsApp com a mensagem já escrita.",
+    fitFor: [
+      "Você ainda não tem site e hoje manda o cliente para o perfil do Instagram",
+      "Vai investir em anúncio e precisa de um lugar para onde mandar o clique",
+      "Seu serviço se explica em uma tela e a decisão do cliente é rápida",
+    ],
+    notFor: [
+      {
+        text: "Você oferece vários serviços e quer aparecer na busca de cada um",
+        leadTo: "site-institucional",
+      },
+      {
+        text: "Você vende produto e precisa receber pedido e pagamento pelo site. Esse escopo existe, mas ainda não tem página aqui: me chame no WhatsApp que eu falo dele direto.",
+      },
+    ],
+    includes: [
+      {
+        title: "Desenhada do zero para o seu negócio",
+        body: "Sem template comprado e sem construtor de blocos. A direção de arte sai do que o seu negócio é, e por isso ela não se parece com a de mais ninguém do seu ramo.",
+      },
+      {
+        title: "Botão de WhatsApp com a mensagem pronta",
+        body: "O cliente clica e o aplicativo abre com o texto já digitado, dizendo de onde ele veio. Você responde sabendo o contexto em vez de começar do zero.",
+      },
+      {
+        title: "Feita para aguentar campanha",
+        body: "Anúncio manda gente em rajada, e no celular, quase sempre em rede móvel. A página é medida nessas condições: se ela demora, o dinheiro do anúncio vira visitante que desistiu antes de ver.",
+      },
+      {
+        title: "Google Meu Negócio ligado ao site",
+        body: "O perfil que aparece no mapa fica configurado e apontando para a página. É de onde vem boa parte das ligações de quem busca serviço perto de casa.",
+      },
+      {
+        title: "Contraste auditado, não estimado",
+        body: "As combinações de cor passam por verificação automática contra o padrão WCAG AA. Texto que some no fundo é um problema de acessibilidade e de venda ao mesmo tempo.",
+      },
+    ],
+    timeline: "7 a 10 dias úteis",
+    faq: [
+      {
+        question: "Quanto custa?",
+        answer:
+          "Depende do tamanho do que você precisa, e sai fechado na proposta antes de qualquer trabalho começar. O que posso adiantar é o que não existe: mensalidade de plataforma e cobrança por alteração durante a construção.",
+      },
+      {
+        question: "Preciso ter um domínio?",
+        answer:
+          "Não precisa ter antes. Se você já tem, eu aponto para o site novo. Se não tem, eu registro no seu nome, e o registro fica seu, não meu.",
+      },
+      {
+        question: "Vou conseguir editar os textos depois?",
+        answer:
+          "Nesta página, não por conta própria: alterações passam por mim. É uma escolha de escopo, porque painel de edição custa tempo de construção e uma página só raramente justifica. Se editar sozinho é importante para você, o caminho é o site institucional.",
+      },
+      {
+        question: "E se meu negócio crescer?",
+        answer:
+          "A landing vira a home. O código é seu e fica num repositório no seu nome, então dá para continuar de onde parou, comigo ou com outra pessoa.",
+      },
+    ],
+    ctaIntent: "um orçamento de landing page",
+  },
+  {
+    slug: "site-institucional",
+    planId: "institucional",
+    name: "Site institucional",
+    metaTitle: "Criação de site institucional em São Paulo e ABC",
+    metaDescription:
+      "Uma página por serviço, cada uma disputando a própria busca, e um painel para você editar os textos. Fica pronto em 3 a 4 semanas, sem mensalidade de plataforma.",
+    headline: "Uma página por serviço. Cada uma disputando a própria busca.",
+    intro:
+      "Quem procura no Google não digita o nome da sua empresa, digita o serviço que precisa. Se os seus cinco serviços moram todos numa seção da home, existe uma página só concorrendo por cinco buscas diferentes, e ela perde todas para quem dedicou uma página a cada uma.",
+    fitFor: [
+      "Você oferece serviços diferentes e quer ser encontrado por cada um deles",
+      "Precisa explicar o que faz com profundidade, não em três linhas",
+      "Quer trocar textos e preços sem depender de mim para cada vírgula",
+    ],
+    notFor: [
+      {
+        text: "Você só precisa de um endereço para colocar na bio do Instagram",
+        leadTo: "landing-page",
+      },
+      {
+        text: "Você vende produto e precisa de catálogo, estoque e pagamento. Esse escopo existe, mas ainda não tem página aqui: me chame no WhatsApp que eu falo dele direto.",
+      },
+    ],
+    includes: [
+      {
+        title: "Uma página por serviço, de verdade",
+        body: "Cada serviço ganha endereço próprio, título próprio e texto próprio. Página que é a mesma casca com as palavras trocadas o Google trata como isca e desconta, então o trabalho está em dar substância diferente a cada uma.",
+      },
+      {
+        title: "Estrutura que o negócio pedir",
+        body: "Home, sobre, serviços e contato é o padrão, não a regra. Se o seu caso pede uma página de equipe ou uma de perguntas frequentes, é isso que entra.",
+      },
+      {
+        title: "Painel para você editar",
+        body: "Texto, preço e foto você troca sozinho, sem me chamar e sem instalar plugin. O que o painel não faz é deixar você quebrar o layout por acidente: os campos são os que fazem sentido mudar.",
+      },
+      {
+        title: "SEO técnico completo",
+        body: "Sitemap, dados estruturados, endereço canônico e títulos escritos um a um. É o encanamento que faz o Google entender o site; não é promessa de primeiro lugar, é a condição para disputar.",
+      },
+      {
+        title: "Medido antes de entregar",
+        body: "Você recebe o relatório de desempenho e de acessibilidade do site publicado, com os números do seu site, não com uma média de mercado.",
+      },
+    ],
+    timeline: "3 a 4 semanas",
+    faq: [
+      {
+        question: "Quantas páginas entram?",
+        answer:
+          "Depende de quantos serviços você tem e de quais valem página própria. Serviço que ninguém busca separadamente não ganha página, porque página vazia atrapalha em vez de ajudar. Isso é decidido na conversa inicial e fica escrito na proposta.",
+      },
+      {
+        question: "Em quanto tempo apareço no Google?",
+        answer:
+          "Semanas, e às vezes meses. Domínio novo demora a ser levado a sério, e ninguém controla isso. O que o site faz é estar tecnicamente pronto para quando o Google olhar; quem promete primeira posição com data está vendendo o que não tem.",
+      },
+      {
+        question: "Tem mensalidade?",
+        answer:
+          "Da minha parte, não. A hospedagem usada cabe no plano gratuito para sites deste tamanho, e o domínio é uma taxa anual paga direto ao registro, no seu nome. Se um dia o site crescer a ponto de sair do plano gratuito, você saberá antes, não pela fatura.",
+      },
+      {
+        question: "Esse método funciona mesmo?",
+        answer:
+          "Este site é o exemplo. Ele nasceu com os serviços amontoados numa seção só, e a página que você está lendo existe justamente porque essa decisão estava errada. Dá para acompanhar o resultado, porque o case e os números são públicos.",
+      },
+    ],
+    ctaIntent: "um orçamento de site institucional",
+  },
+];

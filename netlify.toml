@@ -65,3 +65,8 @@
   for = "/cases/:slug/opengraph-image"
   [headers.values]
     Content-Type = "image/png"
+
+[[headers]]
+  for = "/servicos/:slug/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"

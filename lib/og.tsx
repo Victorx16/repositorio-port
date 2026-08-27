@@ -151,6 +151,9 @@ export function RodapeOg({ direita }: { direita: string }) {
         paddingTop: 28,
       }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element -- isto não roda
+          num navegador: o Satori transforma esta árvore em PNG durante o
+          build, e não conhece next/image. */}
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(
           wordmarkSvg(OG.paper, OG.signal),

@@ -4,7 +4,9 @@ import { Action } from "@/components/ui/action";
 import { Reveal } from "@/components/ui/reveal";
 import { SpecLabel } from "@/components/ui/spec-label";
 import { useWhatsAppWidget } from "@/components/whatsapp-widget/context";
-import { SERVICE_PLANS } from "@/lib/constants";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { SERVICE_PAGES, SERVICE_PLANS } from "@/lib/constants";
 
 /**
  * Serviços — agora uma tabela de verdade.
@@ -113,6 +115,31 @@ export function ServicesTable() {
                 >
                   {plan.ctaLabel ?? "Pedir orçamento"}
                 </Action>
+
+                {/*
+                  Quando o serviço tem página própria, a linha da tabela deixa
+                  de ser o fim da leitura. Sem este link a página existiria só
+                  no sitemap: um endereço que o Google encontra e que nenhum
+                  visitante alcança.
+                */}
+                {(() => {
+                  const pagina = SERVICE_PAGES.find(
+                    (s) => s.planId === plan.id,
+                  );
+                  if (!pagina) return null;
+                  return (
+                    <Link
+                      href={`/servicos/${pagina.slug}`}
+                      className="link-group group/link text-mute hover:text-paper mt-4 inline-flex min-h-11 items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] uppercase transition-colors"
+                    >
+                      <span className="link-rule">Ver o escopo completo</span>
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-3.5 transition-transform duration-200 group-hover/link:translate-x-1"
+                      />
+                    </Link>
+                  );
+                })()}
               </div>
             </Reveal>
           ))}

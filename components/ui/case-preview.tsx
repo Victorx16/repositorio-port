@@ -50,10 +50,10 @@ export function CasePreview({
             type="image/webp"
           />
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element -- art direction
-            precisa de <picture>, que o next/image não expõe. As capturas já
-            saem no tamanho e no formato certos, e o export é estático: não há
-            otimizador de imagem em produção para o next/image acionar. */}
+        {/* Art direction precisa de <picture>, que o next/image não expõe. As
+            capturas já saem no tamanho e no formato certos, e o export é
+            estático: não há otimizador de imagem em produção para o
+            next/image acionar. */}
         <img
           src={src}
           alt={alt ?? ""}
