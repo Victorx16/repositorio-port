@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { CASE_STUDIES, NAV_LINKS, SITE, whatsappLink } from "@/lib/constants";
 import { Action } from "@/components/ui/action";
 import { Wordmark } from "@/components/ui/wordmark";
@@ -76,6 +77,29 @@ export function Footer() {
                 </Link>
               ))}
             </nav>
+
+            {/*
+              O Instagram fica fora do <nav>: aquele grupo é de seções desta
+              página, e este link sai do site. Separado por uma linha, a quebra
+              vira decisão em vez de parecer o quinto item que não coube.
+
+              Sem ícone de marca de propósito. A lucide removeu os glifos de
+              marca, e um logo colorido de rede social seria a única coisa
+              nesta página fora do vocabulário da prancha. A seta diagonal já é
+              o sinal de "sai do site" usado no resto do documento.
+            */}
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-group group/link text-mute hover:text-paper border-rule mt-6 inline-flex min-h-11 items-center gap-1.5 border-t pt-4 font-mono text-[0.6875rem] tracking-[0.12em] uppercase transition-colors"
+            >
+              <span className="link-rule">Instagram</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-3 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+              />
+            </a>
           </div>
 
           {/* O carimbo. As bordas são só topo e esquerda em cada célula; a

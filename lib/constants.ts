@@ -9,6 +9,12 @@ export const SITE = {
   region: "São Paulo & ABC Paulista",
   /** Ano de abertura. Aparece no carimbo do rodapé — não escondemos ser novo. */
   since: "2026",
+  /**
+   * Perfil no Instagram. Além do link no rodapé, entra em `sameAs` nos dados
+   * estruturados: é assim que o Google entende que o perfil e o site são a
+   * mesma entidade, em vez de dois nomes parecidos sem relação declarada.
+   */
+  instagram: "https://www.instagram.com/codevxtech/",
 };
 
 export function whatsappLink(message: string) {

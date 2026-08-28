@@ -56,6 +56,10 @@ export function StructuredData() {
     foundingDate: SITE.since,
     telephone: `+${SITE.whatsappNumber}`,
     knowsLanguage: "pt-BR",
+    // Declara o perfil como sendo da mesma entidade. Sem isto, o Google vê um
+    // site e um Instagram de nome parecido e não tem como afirmar que são o
+    // mesmo negócio.
+    sameAs: [SITE.instagram],
     areaServed: CIDADES.map((name) => ({ "@type": "City", name })),
     // Todos os dias, 09:00 às 20:00, igual ao perfil no Google.
     openingHoursSpecification: {
