@@ -50,7 +50,20 @@ export function Header() {
     >
       <div className="shell flex h-18 items-center justify-between gap-6">
         <Link
-          href="/#top"
+          href="/"
+          onClick={(evento) => {
+            // Já estando na home, o Link para "/" não navega para lugar nenhum.
+            // Rolar à mão evita o clique morto — e sem o antigo "#top", que
+            // ficava preso na barra de endereços até a próxima navegação.
+            if (window.location.pathname === "/") {
+              evento.preventDefault();
+              // Sem `behavior`: segue o `scroll-behavior` do documento, que
+              // hoje é `auto`. É o mesmo salto instantâneo que o antigo
+              // "/#top" dava — forçar `smooth` aqui trocaria o comportamento
+              // do site e trava na subida de páginas longas.
+              window.scrollTo({ top: 0 });
+            }
+          }}
           className="-my-1 flex min-h-11 items-center"
           aria-label="Code VX, ir para o início"
         >

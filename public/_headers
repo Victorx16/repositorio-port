@@ -1,0 +1,48 @@
+# Cabeçalhos de produção — Cloudflare Pages.
+#
+# Este arquivo é a tradução do bloco [[headers]] do netlify.toml. Vive em
+# public/ porque o Next copia essa pasta inteira para out/ no build, e o
+# Cloudflare Pages lê o _headers da raiz do diretório publicado.
+#
+# Num site exportado estático não existe servidor Next, então os cabeçalhos
+# declarados em next.config.ts não valem em produção. A fonte da verdade é
+# este arquivo.
+
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+# Arquivos com hash no nome nunca mudam de conteúdo. Um ano de cache imutável
+# evita que o visitante recorrente baixe fonte e JavaScript de novo.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ---------------------------------------------------------------------------
+# Tipo das imagens de compartilhamento.
+#
+# As rotas de imagem do Next geram arquivos SEM extensão (out/opengraph-image),
+# e a CDN então os serve como text/plain. O nosniff acima, que existe por
+# segurança, fecha a última saída: o leitor de link fica proibido de adivinhar
+# que aquilo é um PNG, e o cartão do WhatsApp aparece sem figura.
+#
+# São quatro rotas hoje: a home, o case e as duas páginas de serviço. Estão
+# escritas uma a uma, e não por padrão, porque um curinga no meio do caminho
+# não é garantido no Cloudflare Pages — e um cabeçalho que falha em silêncio
+# é exatamente o defeito que essas linhas existem para consertar.
+# Ao criar um case ou serviço novo, acrescente a linha aqui.
+# ---------------------------------------------------------------------------
+
+/opengraph-image
+  Content-Type: image/png
+
+/cases/aurea-studio/opengraph-image
+  Content-Type: image/png
+
+/servicos/landing-page/opengraph-image
+  Content-Type: image/png
+
+/servicos/site-institucional/opengraph-image
+  Content-Type: image/png

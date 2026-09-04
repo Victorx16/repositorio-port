@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RevealObserver } from "@/components/ui/reveal-observer";
+import { UrlLimpa } from "@/components/ui/url-limpa";
 import { WhatsAppWidgetProvider } from "@/components/whatsapp-widget/context";
 import { WhatsAppWidgetLazy } from "@/components/whatsapp-widget/lazy";
 import { SITE } from "@/lib/constants";
@@ -93,6 +94,7 @@ export default function RootLayout({
           {children}
           <StructuredData />
           <RevealObserver />
+          <UrlLimpa />
           <WhatsAppWidgetLazy />
         </WhatsAppWidgetProvider>
       </body>
