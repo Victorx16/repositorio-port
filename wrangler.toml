@@ -21,6 +21,16 @@
 name = "repositorio-port"
 compatibility_date = "2026-09-02"
 
+# O comando que gera a pasta publicada.
+#
+# `out/` está no .gitignore, e com razão: é saída de build, não código. Logo,
+# quem clona o repositório não recebe a pasta — precisa produzi-la. Sem esta
+# seção, o build automático clonava o projeto, procurava `./out`, não achava, e
+# publicava um Worker sem nenhum arquivo. O sintoma era um "Hello world" no
+# domínio e `error code: 1042` nas rotas, com o build marcado como sucesso.
+[build]
+command = "pnpm build"
+
 [assets]
 directory = "./out"
 
