@@ -18,7 +18,7 @@
 # publicado de verdade. Sem a query, a resposta pode ser cache — foi assim que
 # a publicação vazia passou despercebida na primeira verificação.
 
-name = "codevx"
+name = "repositorio-port"
 compatibility_date = "2026-09-02"
 
 [assets]
