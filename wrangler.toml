@@ -1,0 +1,29 @@
+# Configuração de publicação no Cloudflare Workers.
+#
+# O site é exportado como HTML estático (`output: "export"` no next.config.ts),
+# então não há código de Worker: só a pasta `out/` servida como assets.
+#
+# Este arquivo existe por causa de uma falha real. Na primeira tentativa o site
+# rodava no Cloudflare Pages, onde o diretório de publicação é um campo do
+# painel. O campo ficou vazio, o build terminou com sinal verde e a publicação
+# saiu sem nenhum arquivo — home de 1 byte, imagens de compartilhamento sem
+# corpo, cabeçalhos de segurança ausentes. Nada disso acendeu alarme, porque a
+# CDN continuou servindo o conteúdo antigo em cache por alguns minutos.
+#
+# Declarar o diretório aqui tira essa configuração do painel e põe no
+# repositório, onde ela é revisável e não pode ficar em branco sem alguém ver.
+#
+# Como conferir se uma publicação deu certo: peça a home **com query string**
+# (`/?x=1`). URL com parâmetro sempre vai à origem, então mostra o que está
+# publicado de verdade. Sem a query, a resposta pode ser cache — foi assim que
+# a publicação vazia passou despercebida na primeira verificação.
+
+name = "codevx"
+compatibility_date = "2026-09-02"
+
+[assets]
+directory = "./out"
+
+# O export gera out/404.html. Sem esta linha, um caminho inexistente devolveria
+# a resposta padrão da plataforma em vez da página do site.
+not_found_handling = "404-page"
